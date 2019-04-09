@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>panda2</artifactId>
+        <groupId>uk.ac.bris.cs</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>scotlandyard</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <modules>
+        <module>scotlandyard-api</module>
+        <module>scotlandyard-websocket-api</module>
+        <module>scotlandyard-model</module>
+        <module>scotlandyard-model-fn-ri</module>
+        <module>scotlandyard-model-rm-ri</module>
+        <module>scotlandyard-model-imp-ri</module>
+        <module>scotlandyard-example-ai</module>
+        <module>scotlandyard-titus-bundle</module>
+        <module>scotlandyard-local</module>
+        <module>scotlandyard-remote</module>
+        <module>scotlandyard-titus-webapp</module>
+    </modules>
+
+  
+</project>
