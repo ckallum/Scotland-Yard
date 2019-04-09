@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.Pane?><?import javafx.scene.shape.Circle?>
+<Pane fx:id="root" pickOnBounds="false" xmlns="http://javafx.com/javafx/8"
+    xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Circle fx:id="piece" fill="DODGERBLUE" radius="30.0" stroke="BLACK" strokeType="INSIDE"
+            styleClass="move-hint" />
+    </children>
+</Pane>

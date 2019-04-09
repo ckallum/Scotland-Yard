@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.Insets?><?import javafx.scene.control.Button?><?import javafx.scene.control.TextArea?><?import javafx.scene.layout.VBox?>
+<VBox fx:id="root" alignment="CENTER_RIGHT" prefHeight="500.0" prefWidth="600.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="content" VBox.vgrow="ALWAYS" />
+      <Button fx:id="dismiss" mnemonicParsing="false" text="Close">
+         <padding>
+            <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+         </padding>
+      </Button>
+   </children>
+   <padding>
+      <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
+   </padding>
+</VBox>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckMenuItem?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="main-window" fx:id="root" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="500.0" minWidth="800.0" prefHeight="700.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+      <children>
+          <MenuBar fx:id="menu" VBox.vgrow="NEVER">
+              <menus>
+                  <Menu fx:id="gameMenu" mnemonicParsing="false" text="Game">
+                      <items>
+                          <MenuItem fx:id="close" mnemonicParsing="false" text="Close Window">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="W" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator></MenuItem>
+                      </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="View">
+                      <items>
+                          <MenuItem fx:id="resetViewport" mnemonicParsing="false" text="Reset viewport">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="R" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></MenuItem>
+                  <CheckMenuItem fx:id="focusToggle" mnemonicParsing="false" text="Focus player">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></CheckMenuItem>
+                          <CheckMenuItem fx:id="historyToggle" mnemonicParsing="false" text="Move history">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="H" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></CheckMenuItem>
+                          <CheckMenuItem fx:id="travelLogToggle" mnemonicParsing="false" selected="true" text="Mr.X Travel Log">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></CheckMenuItem>
+                          <CheckMenuItem fx:id="ticketToggle" mnemonicParsing="false" selected="true" text="Tickets">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="T" control="UP" meta="UP" shift="DOWN" shortcut="UP" />
+                     </accelerator></CheckMenuItem>
+                          <CheckMenuItem fx:id="statusToggle" disable="true" mnemonicParsing="false" text="Status" />
+                          <SeparatorMenuItem mnemonicParsing="false" />
+                  <CheckMenuItem fx:id="animationToggle" mnemonicParsing="false" selected="true" text="Animations" />
+                          <CheckMenuItem fx:id="scrollToggle" mnemonicParsing="false" text="Scroll as zoom" />
+                      </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                      <items>
+                  <MenuItem fx:id="findNode" mnemonicParsing="false" text="Find node" />
+                          <MenuItem fx:id="manual" mnemonicParsing="false" text="Manual" />
+                          <MenuItem fx:id="debug" mnemonicParsing="false" text="Debug" />
+                          <MenuItem fx:id="about" mnemonicParsing="false" text="About">
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F1" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
+                     </accelerator></MenuItem>
+                          <MenuItem fx:id="license" mnemonicParsing="false" text="License" />
+                      </items>
+                  </Menu>
+              </menus>
+          </MenuBar>
+          <StackPane VBox.vgrow="ALWAYS">
+              <children>
+                  <AnchorPane fx:id="gamePane">
+                      <children>
+                  <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" />
+                      <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="SOMETIMES" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints valignment="CENTER" vgrow="ALWAYS" />
+                    </rowConstraints>
+                     <children>
+                                <StackPane fx:id="mapPane" GridPane.columnIndex="1" />
+                                <StackPane fx:id="roundsPane" minWidth="240.0" pickOnBounds="false" />
+                                <StackPane fx:id="playersPane" alignment="CENTER_RIGHT" minWidth="200.0" pickOnBounds="false" GridPane.columnIndex="2" />
+                     </children>
+                  </GridPane>
+                  <StackPane fx:id="notificationPane" pickOnBounds="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+                     </padding>
+                  </StackPane>
+                      </children>
+                  </AnchorPane>
+                  <StackPane fx:id="setupPane" pickOnBounds="false" />
+              </children>
+          </StackPane>
+      <VBox fx:id="statusPane" VBox.vgrow="NEVER" />
+      </children>
+  </VBox>

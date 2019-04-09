@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="players" fx:id="root" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label id="title" text="Tickets" />
+      <ScrollPane id="players'" fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+         <content>
+                <VBox fx:id="playerContainer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+         </content>
+      </ScrollPane>
+   </children>
+</VBox>

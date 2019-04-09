@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="root" alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="ticket" fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" />
+      <Label fx:id="count" text="20">
+         <font>
+            <Font name="Consolas" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="bar" styleClass="ticket-counter" text="||||||||||||||||||" HBox.hgrow="ALWAYS" />
+   </children>
+</HBox>

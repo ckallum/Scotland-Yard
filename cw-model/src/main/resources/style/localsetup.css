@@ -1,0 +1,99 @@
+
+#root {
+    -fx-padding: 10;
+    /*-fx-font-family: "pencilPete FONT";*/
+    /*-fx-padding: 10px;*/
+
+    /*-fx-base: #f5f5f5;*/
+    /*-fx-background: #cacaca;*/
+    /*-fx-control-inner-background: rgba(239, 231, 148, 0.84);*/
+
+    /*-fx-background-image: url("../paper_pattern.png");*/
+    /*-fx-background-repeat: repeat;*/
+    /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.85), 50, 0.3, 0, 5);*/
+    /*-fx-font-size: 120%;*/
+}
+
+/*.tab-pane .tab-header-area .tab-header-background {*/
+    /*-fx-background-color: transparent;*/
+/*}*/
+
+/*.tab-pane .tab {*/
+    /*-fx-background-color: #3a3a3a;*/
+/*}*/
+
+/*.tab-pane .tab-content-area {*/
+    /*-fx-background-color: #3a3a3a;*/
+/*}*/
+
+.split-pane {
+    -fx-background-color: transparent;
+}
+
+/*.setup-item {*/
+/*-fx-padding: 15;*/
+
+/*}*/
+
+/*.setup-title {*/
+/*-fx-padding: 5;*/
+/*-fx-font-size: 1.3em;*/
+/*}*/
+
+/*#playerTable {*/
+/*-fx-background-color: transparent;*/
+/*-fx-table-cell-border-color: transparent;*/
+/*-fx-light-text-color: black;*/
+/*-fx-mid-text-color: black;*/
+/*-fx-dark-text-color: black;*/
+/*-fx-font-size: 1em;*/
+/*-fx-text-alignment: center;*/
+/*!*-fx-fixed-cell-size: 45px;*!*/
+/*}*/
+
+/*#playerTable *.table-row-cell:filled:selected  {*/
+/*-fx-background-color: floralwhite;*/
+/*-fx-border-width: 1px;*/
+/*-fx-border-color: #2a2a2a;*/
+/*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.5, 2, 0);*/
+/*!*-fx-shape: "m 158.53387,328.07648 20.38532,-11.76947 20.38532,-11.76947 0,23.53894 0,23.53894 -20.38532,-11.76947 z";*!*/
+/*}*/
+
+/*#playerTable *.table-column {*/
+/*-fx-alignment: center;*/
+/*}*/
+
+/*#playerTable *.column-header {*/
+/*-fx-background-color: transparent;*/
+/*-fx-font-size: 1.1em;*/
+/*}*/
+
+/*#playerTable *.column-header-background {*/
+/*-fx-background-color: transparent;*/
+/*}*/
+
+/*#playerTable *.table-row-cell {*/
+
+/*!*-fx-border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;*!*/
+/*}*/
+
+/*#playerTable .filler {*/
+/*!*-fx-background-color: transparent;*!*/
+/*}*/
+
+*.split-pane-divider,
+*.vertical-grabber,
+*.horizontal-grabber {
+    -fx-background-color: null;
+    -fx-border-color: null;
+    -fx-padding: 0;
+}
+
+/*#playerEditor {*/
+
+/*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 8, 0.5, 0, 0);*/
+/*-fx-background-color: white;*/
+/*-fx-border-width: 1px;*/
+/*-fx-border-color: #2a2a2a  #2a2a2a #2a2a2a transparent;*/
+/*-fx-padding: 10 10 10 10;*/
+/*}*/

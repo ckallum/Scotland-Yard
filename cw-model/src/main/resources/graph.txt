@@ -1,0 +1,667 @@
+199 467
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+1 8 Taxi
+1 9 Taxi
+1 46 Bus
+1 46 Underground
+1 58 Bus
+2 10 Taxi
+2 20 Taxi
+3 4 Taxi
+3 11 Taxi
+3 12 Taxi
+3 22 Bus
+3 23 Bus
+4 13 Taxi
+5 15 Taxi
+5 16 Taxi
+6 7 Taxi
+6 29 Taxi
+7 17 Taxi
+7 42 Bus
+8 18 Taxi
+8 19 Taxi
+9 19 Taxi
+9 20 Taxi
+10 11 Taxi
+10 21 Taxi
+10 34 Taxi
+11 22 Taxi
+12 23 Taxi
+13 14 Bus
+13 23 Taxi
+13 23 Bus
+13 24 Taxi
+13 46 Underground
+13 52 Bus
+13 67 Underground
+13 89 Underground
+14 15 Taxi
+14 15 Bus
+14 25 Taxi
+15 16 Taxi
+15 26 Taxi
+15 28 Taxi
+15 29 Bus
+15 41 Bus
+16 28 Taxi
+16 29 Taxi
+17 29 Taxi
+17 30 Taxi
+18 31 Taxi
+18 43 Taxi
+19 32 Taxi
+20 33 Taxi
+21 33 Taxi
+22 23 Taxi
+22 23 Bus
+22 34 Taxi
+22 34 Bus
+22 35 Taxi
+22 65 Bus
+23 37 Taxi
+23 67 Bus
+24 37 Taxi
+24 38 Taxi
+25 38 Taxi
+25 39 Taxi
+26 27 Taxi
+26 39 Taxi
+27 28 Taxi
+27 40 Taxi
+28 41 Taxi
+29 41 Taxi
+29 41 Bus
+29 42 Taxi
+29 42 Bus
+29 55 Bus
+30 42 Taxi
+31 43 Taxi
+31 44 Taxi
+32 33 Taxi
+32 44 Taxi
+32 45 Taxi
+33 46 Taxi
+34 46 Bus
+34 47 Taxi
+34 48 Taxi
+34 63 Bus
+35 36 Taxi
+35 48 Taxi
+35 65 Taxi
+36 37 Taxi
+36 49 Taxi
+37 50 Taxi
+38 50 Taxi
+38 51 Taxi
+39 51 Taxi
+39 52 Taxi
+40 41 Taxi
+40 52 Taxi
+40 53 Taxi
+41 52 Bus
+41 54 Taxi
+41 87 Bus
+42 56 Taxi
+42 72 Taxi
+42 72 Bus
+43 57 Taxi
+44 58 Taxi
+45 46 Taxi
+45 58 Taxi
+45 59 Taxi
+45 60 Taxi
+46 47 Taxi
+46 58 Bus
+46 61 Taxi
+46 74 Underground
+46 78 Bus
+46 79 Underground
+47 62 Taxi
+48 62 Taxi
+48 63 Taxi
+49 50 Taxi
+49 66 Taxi
+51 52 Taxi
+51 67 Taxi
+51 68 Taxi
+52 67 Bus
+52 69 Taxi
+52 86 Bus
+53 54 Taxi
+53 69 Taxi
+54 55 Taxi
+54 70 Taxi
+55 71 Taxi
+55 89 Bus
+56 91 Taxi
+57 58 Taxi
+57 73 Taxi
+58 59 Taxi
+58 74 Taxi
+58 74 Bus
+58 75 Taxi
+58 77 Bus
+59 75 Taxi
+59 76 Taxi
+60 61 Taxi
+60 76 Taxi
+61 62 Taxi
+61 76 Taxi
+61 78 Taxi
+62 79 Taxi
+63 64 Taxi
+63 65 Bus
+63 79 Taxi
+63 79 Bus
+63 80 Taxi
+63 100 Bus
+64 65 Taxi
+64 81 Taxi
+65 66 Taxi
+65 67 Bus
+65 82 Taxi
+65 82 Bus
+66 67 Taxi
+66 82 Taxi
+67 68 Taxi
+67 79 Underground
+67 82 Bus
+67 84 Taxi
+67 89 Underground
+67 102 Bus
+67 111 Underground
+68 69 Taxi
+68 85 Taxi
+69 86 Taxi
+70 71 Taxi
+70 87 Taxi
+71 72 Taxi
+71 89 Taxi
+72 90 Taxi
+72 91 Taxi
+72 105 Bus
+72 107 Bus
+73 74 Taxi
+73 92 Taxi
+74 75 Taxi
+74 92 Taxi
+74 94 Bus
+75 94 Taxi
+76 77 Taxi
+77 78 Taxi
+77 78 Bus
+77 94 Bus
+77 95 Taxi
+77 96 Taxi
+77 124 Bus
+78 79 Taxi
+78 79 Bus
+78 97 Taxi
+79 93 Underground
+79 98 Taxi
+79 111 Underground
+80 99 Taxi
+80 100 Taxi
+81 82 Taxi
+81 100 Taxi
+82 100 Bus
+82 101 Taxi
+82 140 Bus
+83 101 Taxi
+83 102 Taxi
+84 85 Taxi
+85 103 Taxi
+86 87 Bus
+86 102 Bus
+86 103 Taxi
+86 104 Taxi
+86 116 Bus
+87 88 Taxi
+87 105 Bus
+88 89 Taxi
+88 117 Taxi
+89 105 Taxi
+89 105 Bus
+89 128 Underground
+89 140 Underground
+90 91 Taxi
+90 105 Taxi
+91 105 Taxi
+91 107 Taxi
+92 93 Taxi
+93 94 Taxi
+93 94 Bus
+94 95 Taxi
+95 122 Taxi
+96 97 Taxi
+96 109 Taxi
+97 98 Taxi
+97 109 Taxi
+98 99 Taxi
+98 110 Taxi
+99 110 Taxi
+99 112 Taxi
+100 101 Taxi
+100 111 Bus
+100 112 Taxi
+100 113 Taxi
+101 114 Taxi
+102 103 Taxi
+102 115 Taxi
+102 127 Bus
+104 116 Taxi
+105 106 Taxi
+105 107 Bus
+105 108 Taxi
+105 108 Bus
+106 107 Taxi
+107 119 Taxi
+107 161 Bus
+108 116 Bus
+108 117 Taxi
+108 119 Taxi
+108 135 Bus
+109 110 Taxi
+109 124 Taxi
+110 111 Taxi
+111 112 Taxi
+111 124 Taxi
+111 124 Bus
+111 153 Underground
+111 163 Underground
+112 125 Taxi
+113 114 Taxi
+113 125 Taxi
+114 115 Taxi
+114 126 Taxi
+114 131 Taxi
+114 132 Taxi
+115 126 Taxi
+115 127 Taxi
+116 117 Taxi
+116 118 Taxi
+116 127 Taxi
+116 127 Bus
+116 142 Bus
+117 129 Taxi
+118 129 Taxi
+118 134 Taxi
+118 142 Taxi
+119 136 Taxi
+120 121 Taxi
+120 144 Taxi
+121 122 Taxi
+121 145 Taxi
+122 123 Taxi
+122 123 Bus
+122 144 Bus
+122 146 Taxi
+123 124 Taxi
+123 124 Bus
+123 137 Taxi
+123 144 Bus
+123 148 Taxi
+123 149 Taxi
+123 165 Bus
+124 130 Taxi
+124 138 Taxi
+124 153 Bus
+125 131 Taxi
+126 127 Taxi
+126 140 Taxi
+127 133 Taxi
+127 133 Bus
+127 134 Taxi
+128 185 Underground
+128 187 Bus
+128 188 Taxi
+128 199 Bus
+129 135 Taxi
+129 142 Taxi
+129 143 Taxi
+130 131 Taxi
+130 139 Taxi
+132 140 Taxi
+133 140 Taxi
+133 140 Bus
+133 141 Taxi
+133 157 Bus
+134 141 Taxi
+134 142 Taxi
+135 128 Bus
+135 136 Taxi
+135 143 Taxi
+135 161 Taxi
+135 161 Bus
+136 162 Taxi
+137 147 Taxi
+138 150 Taxi
+138 152 Taxi
+139 140 Taxi
+139 153 Taxi
+139 154 Taxi
+140 128 Underground
+140 153 Underground
+140 154 Taxi
+140 154 Bus
+140 156 Taxi
+140 156 Bus
+141 142 Taxi
+141 158 Taxi
+142 128 Taxi
+142 128 Bus
+142 143 Taxi
+142 157 Bus
+142 158 Taxi
+143 128 Taxi
+143 160 Taxi
+144 145 Taxi
+144 163 Bus
+144 177 Taxi
+145 146 Taxi
+146 147 Taxi
+146 163 Taxi
+147 164 Taxi
+148 149 Taxi
+148 164 Taxi
+149 150 Taxi
+149 165 Taxi
+150 151 Taxi
+151 152 Taxi
+151 165 Taxi
+151 166 Taxi
+152 153 Taxi
+153 154 Taxi
+153 154 Bus
+153 163 Underground
+153 166 Taxi
+153 167 Taxi
+153 180 Bus
+153 184 Bus
+153 185 Underground
+154 155 Taxi
+154 156 Bus
+155 156 Taxi
+155 167 Taxi
+155 168 Taxi
+156 157 Taxi
+156 157 Bus
+156 169 Taxi
+156 184 Bus
+157 158 Taxi
+157 170 Taxi
+157 185 Bus
+158 159 Taxi
+159 170 Taxi
+159 172 Taxi
+159 186 Taxi
+159 198 Taxi
+160 128 Taxi
+160 161 Taxi
+160 173 Taxi
+161 128 Bus
+161 174 Taxi
+161 199 Bus
+162 175 Taxi
+163 176 Bus
+163 177 Taxi
+163 191 Bus
+164 178 Taxi
+164 179 Taxi
+165 179 Taxi
+165 180 Taxi
+165 180 Bus
+165 191 Bus
+166 181 Taxi
+166 183 Taxi
+167 168 Taxi
+167 183 Taxi
+168 184 Taxi
+169 184 Taxi
+170 185 Taxi
+171 173 Taxi
+171 175 Taxi
+171 199 Taxi
+172 128 Taxi
+172 187 Taxi
+173 174 Taxi
+173 188 Taxi
+174 175 Taxi
+176 177 Taxi
+176 189 Taxi
+176 190 Bus
+178 189 Taxi
+178 191 Taxi
+179 191 Taxi
+180 181 Taxi
+180 184 Bus
+180 190 Bus
+180 193 Taxi
+181 182 Taxi
+181 193 Taxi
+182 183 Taxi
+182 195 Taxi
+183 196 Taxi
+184 185 Taxi
+184 185 Bus
+184 196 Taxi
+184 197 Taxi
+185 186 Taxi
+185 187 Bus
+186 198 Taxi
+187 188 Taxi
+187 198 Taxi
+188 199 Taxi
+189 190 Taxi
+190 191 Taxi
+190 191 Bus
+190 192 Taxi
+191 192 Taxi
+192 194 Taxi
+193 194 Taxi
+194 195 Taxi
+195 197 Taxi
+196 197 Taxi
+198 199 Taxi
+194 157 Ferry
+157 115 Ferry
+115 108 Ferry

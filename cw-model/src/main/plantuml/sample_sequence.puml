@@ -1,0 +1,126 @@
+@startuml
+
+skinparam monochrome true
+
+title Sample game sequence(3 player, 4 rounds)
+
+legend right
+Type legend
+In package: uk.ac.bris.cs.scotlandyard.model
+   S - interface Spectator
+   M - class ScotlandYardModel
+   V - class ScotlandYardView
+   P - interface Player
+endlegend
+
+skinparam ParticipantPadding 0
+
+actor UI
+participant Spectator <<(S, #BBBBBB)>>
+participant ScotlandYardModel <<(M, #BBBBBB) java.util.function.Consumer<Move> >>
+box "Players" #LightBlue
+	participant MrX <<(P, #BBBBBB)>>
+	participant Red <<(P, #BBBBBB)>>
+	participant Blue <<(P, #BBBBBB)>>
+end box
+
+autonumber
+
+
+UI -> ScotlandYardModel : startRotate()
+group rotation
+
+rnote over ScotlandYardModel: Round=0, CurrentPlayer=Black
+ScotlandYardModel -> MrX: makeMove(V, int, Move[], callback<Move>)
+activate MrX
+	MrX-->ScotlandYardModel : Consumer.accept(Ticket)
+deactivate MrX
+rnote over ScotlandYardModel: Round=1, CurrentPlayer=Red
+ScotlandYardModel->Spectator: onRoundStarted(V, 1)
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel -> Red: makeMove(V, int, Move[], callback<Move>)
+activate Red
+	Red-->ScotlandYardModel : Ticket
+deactivate Red
+rnote over ScotlandYardModel: Round=1, CurrentPlayer=Blue
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel -> Blue: makeMove(V, int, Move[], callback<Move>)
+activate Blue
+	Blue-->ScotlandYardModel : Ticket
+deactivate Blue
+rnote over ScotlandYardModel: Round=1, CurrentPlayer=Black
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+ScotlandYardModel->Spectator: onRotationComplete(V)
+
+end
+
+UI -> ScotlandYardModel : startRotate()
+group rotation
+
+rnote over ScotlandYardModel: Round=1, CurrentPlayer=Black
+ScotlandYardModel -> MrX: makeMove(V, int, Move[], callback<Move>)
+activate MrX
+	MrX-->ScotlandYardModel : Double[Ticket1, Ticket2]
+deactivate  MrX
+rnote over ScotlandYardModel: Round=1, CurrentPlayer=Red
+ScotlandYardModel-> Spectator: onMoveMade(V, Double)
+rnote over ScotlandYardModel: Round=2, CurrentPlayer=Red
+ScotlandYardModel->Spectator: onRoundStarted(V, 2)
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket1)
+rnote over ScotlandYardModel: Round=3, CurrentPlayer=Red
+ScotlandYardModel->Spectator: onRoundStarted(V, 3)
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket2)
+
+ScotlandYardModel -> Red: makeMove(V, int, Move[], callback<Move>)
+activate Red
+	Red-->ScotlandYardModel : Ticket
+deactivate Red
+rnote over ScotlandYardModel: Round=3, CurrentPlayer=Blue
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel -> Blue: makeMove(V, int, Move[], callback<Move>)
+activate Blue
+	Blue-->ScotlandYardModel : Ticket
+deactivate Blue
+rnote over ScotlandYardModel: Round=3, CurrentPlayer=Black
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel->Spectator: onRotationComplete(V)
+
+end
+
+UI -> ScotlandYardModel : startRotate()
+group rotation
+
+rnote over ScotlandYardModel: Round=3, CurrentPlayer=Black
+ScotlandYardModel -> MrX: makeMove(V, int, Move[], callback<Move>)
+activate MrX
+	MrX-->ScotlandYardModel : Ticket
+deactivate MrX
+rnote over ScotlandYardModel: Round=4, CurrentPlayer=Red
+ScotlandYardModel->Spectator: onRoundStarted(V, 4)
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel -> Red: makeMove(V, int, Move[], callback<Move>)
+activate Red
+	Red-->ScotlandYardModel : Ticket
+deactivate Red
+rnote over ScotlandYardModel: Round=4, CurrentPlayer=Blue
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel -> Blue: makeMove(V, int, Move[], callback<Move>)
+activate Blue
+	Blue-->ScotlandYardModel : Ticket
+deactivate Blue
+rnote over ScotlandYardModel: Round=4, CurrentPlayer=Black
+ScotlandYardModel-> Spectator: onMoveMade(V, Ticket)
+
+ScotlandYardModel->Spectator: onGameOver(V, [Red, Blue])
+
+rnote over ScotlandYardModel: Round=4, CurrentPlayer=Black, GameOver=true
+
+end
+
+@enduml
