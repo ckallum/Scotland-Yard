@@ -1,19 +1,16 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
 import uk.ac.bris.cs.scotlandyard.ai.ManagedAI;
 import uk.ac.bris.cs.scotlandyard.ai.PlayerFactory;
-import uk.ac.bris.cs.scotlandyard.model.Colour;
-import uk.ac.bris.cs.scotlandyard.model.Move;
-import uk.ac.bris.cs.scotlandyard.model.Player;
-import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
+import uk.ac.bris.cs.scotlandyard.ai.ResourceProvider;
+import uk.ac.bris.cs.scotlandyard.ai.Visualiser;
+import uk.ac.bris.cs.scotlandyard.model.*;
 
 // TODO name the AI
-@ManagedAI("Name me!")
+@ManagedAI("MrXAI")
 public class MyAI implements PlayerFactory {
 
 	// TODO create a new player here
@@ -33,7 +30,20 @@ public class MyAI implements PlayerFactory {
 			// TODO do something interesting here; find the best move
 			// picks a random move
 			callback.accept(new ArrayList<>(moves).get(random.nextInt(moves.size())));
-
 		}
+	}
+	@Override
+	public List<Spectator> createSpectators(ScotlandYardView view){
+		return Collections.emptyList();
+	}
+
+	@Override
+	public void finish(){
+
+	}
+
+	@Override
+	public void ready(Visualiser visualiser, ResourceProvider provider){
+
 	}
 }
