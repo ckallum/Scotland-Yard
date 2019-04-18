@@ -5,5 +5,6 @@ import java.util.Collection;
 import uk.ac.bris.cs.scotlandyard.ui.ai.*;
 import uk.ac.bris.cs.scotlandyard.model.*;
 import java.util.*;
+
 public class Dijkstras {
 }
