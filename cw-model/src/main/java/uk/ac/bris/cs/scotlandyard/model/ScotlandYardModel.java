@@ -20,7 +20,7 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
     private ScotlandYardPlayer mrX;
     private int mrXLastLocation;
     private int currentPlayer=0;
-    private int currentRound = ScotlandYardView.NOT_STARTED;
+    private int currentRound=0;
 
     public ScotlandYardModel(List<Boolean> rounds, Graph<Integer, Transport> graph,
                              PlayerConfiguration mrX, PlayerConfiguration firstDetective,
