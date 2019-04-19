@@ -10,10 +10,13 @@ import java.util.Set;
 
 public class Score {
     private ScotlandYardView view;
-    private int nearbyDetectives;
-    private int freedomOfMovement;
+    private DGraph graph;
     private int source;
 
-
+    public Score(ScotlandYardView view, int mrxLocation, DGraph graph) {
+        this.view = view;
+        this.graph = graph;
+        this.source = mrxLocation;
+    }
 
 }
