@@ -1,11 +1,7 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
-import uk.ac.bris.cs.scotlandyard.model.*;
-import uk.ac.bris.cs.scotlandyard.ui.ai.*;
-import java.util.*;
 public class DNode {
     private Integer location;
-    private int multiplier;
-    private ScotlandYardView view;
+    private double multiplier;
 
     public DNode(Integer location) {
         this.location = location;
@@ -15,8 +11,12 @@ public class DNode {
         return location;
     }
 
-    public int getMultiplier() {
+    public double getMultiplier() {
         return multiplier;
+    }
+
+    public void setMultiplier(double multiplier){
+        this.multiplier = multiplier;
     }
 
 }
