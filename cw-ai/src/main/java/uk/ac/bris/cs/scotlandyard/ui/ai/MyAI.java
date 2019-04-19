@@ -27,8 +27,11 @@ public class MyAI implements PlayerFactory {
 		@Override
 		public void makeMove(ScotlandYardView view, int location, Set<Move> moves,
 				Consumer<Move> callback) {
+			/*view has all game info*/
+			/*callback is given some move, doesn't have to be array move*/
 			// TODO do something interesting here; find the best move
 			// picks a random move
+			//callback accept some chosen move
 			callback.accept(new ArrayList<>(moves).get(random.nextInt(moves.size())));
 		}
 	}

@@ -7,4 +7,5 @@ import uk.ac.bris.cs.scotlandyard.model.*;
 import java.util.*;
 
 public class Dijkstras {
+
 }

@@ -92,7 +92,9 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
     public void startRotate() {
         if (currentPlayer == 0 && isGameOver()) throw new IllegalStateException("Game is already over");
         else {
-            mrX.player().makeMove(this, mrX.location(), validMoves(mrX), this);
+            /*callback = accept: lambda function that takes in current view, does something and returns nothing.
+            * This is the Consumer Pattern*/
+            mrX.player().makeMove(this, mrX.location(), validMoves(mrX), this::accept);
         }
     }
 
@@ -177,6 +179,7 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
     public void accept(Move move) {
         requireNonNull(move);
         if (!validMoves(players.get(currentPlayer)).contains(move)) throw new IllegalArgumentException("invalid move");
+        //Type of Double Dispatch using Visitor Pattern to identify the type of the move.
         move.visit(this);
         if (isGameOver()) {
             for (Spectator s : spectators) {

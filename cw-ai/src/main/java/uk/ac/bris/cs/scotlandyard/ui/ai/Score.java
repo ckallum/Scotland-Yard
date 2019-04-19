@@ -9,4 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 public class Score {
+    private ScotlandYardView view;
+    private int nearbyDetectives;
+    private int freedomOfMovement;
+    private int source;
+
+
+
 }

@@ -6,4 +6,5 @@ import uk.ac.bris.cs.scotlandyard.ui.ai.*;
 import java.util.*;
 
 public class DGraph {
+    private ScotlandYardView view;
 }
