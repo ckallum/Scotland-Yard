@@ -1,4 +1,5 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.Node;
@@ -21,7 +22,7 @@ public class DGraph {
 
         List<Node<Integer>> allNodes = graph.getNodes();
         for(Node<Integer> node : allNodes){
-            this.nodes.add(new DNode(requireNonNull(node.value())));
+            this.nodes.add(node.value(),new DNode(requireNonNull(node.value())));
         }
         Collection<Edge<Integer,Transport>> allEdges = graph.getEdges();
         for(Edge<Integer,Transport> edge : allEdges){
@@ -61,11 +62,15 @@ public class DGraph {
     }
 
     public ArrayList<DEdge> getEdges() {
-        return edges;
+        return requireNonNull(edges);
     }
 
     public ArrayList<DNode> getNodes() {
-        return nodes;
+        return requireNonNull(nodes);
+    }
+
+    public DNode getNode(int location){
+        return nodes.get(location);
     }
 //
 //    public static void main(String[] args) {

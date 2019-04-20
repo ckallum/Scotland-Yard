@@ -8,7 +8,7 @@ public class DNode {
     }
 
     public Integer getLocation() {
-        return location;
+        return this.location;
     }
 
     public double getMultiplier() {
@@ -18,5 +18,6 @@ public class DNode {
     public void setMultiplier(double multiplier){
         this.multiplier = multiplier;
     }
+
 
 }
