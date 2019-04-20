@@ -1,5 +1,6 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.Node;
@@ -72,7 +73,13 @@ public class DGraph {
     public DNode getNode(int location){
         return nodes.get(location);
     }
-//
+
+    @NonNull
+    public int getSize() {
+        return size;
+    }
+
+    //
 //    public static void main(String[] args) {
 //
 //        DGraph graph = new DGraph();

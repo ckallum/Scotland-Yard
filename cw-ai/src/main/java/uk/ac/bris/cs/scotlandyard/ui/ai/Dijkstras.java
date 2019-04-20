@@ -6,7 +6,7 @@ import java.util.*;
 public class Dijkstras {
         private DGraph graph;
         private int source;
-        private Map<DNode, Integer> totalCosts = new HashMap<>(graph.getNodes().size());
+        private Map<DNode, Integer> totalCosts = new HashMap<>(graph.getSize());
         private MinMaxPriorityQueue<Integer> maxPriorityQueue;
         private Set<Integer> visited = new HashSet<>();
 
@@ -14,11 +14,11 @@ public class Dijkstras {
     public Dijkstras(DGraph graph, int source) {
         this.graph = graph;
         this.source = source;
-        this.totalCosts.put(graph.getNode(source),0);
-        maxPriorityQueue.add(source);
     }
 
     public int dijkstras(){
+        totalCosts.put(graph.getNode(source),0);
+        maxPriorityQueue.add(source);
         ArrayList<DNode> nodes = graph.getNodes();
         for(DNode node : nodes){
             if (node.getLocation()!= source){
