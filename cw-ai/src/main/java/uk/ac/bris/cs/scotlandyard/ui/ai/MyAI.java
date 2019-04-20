@@ -12,6 +12,7 @@ import uk.ac.bris.cs.scotlandyard.model.*;
 // TODO name the AI
 @ManagedAI("MrXAI")
 public class MyAI implements PlayerFactory {
+	private Score scorer;
 
 	// TODO create a new player here
 	@Override
