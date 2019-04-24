@@ -2,7 +2,8 @@ package uk.ac.bris.cs.scotlandyard.ui.ai;
 public class DNode {
     private Integer location;
     private double danger;
-    //Freedom of movement
+    private double freedom;
+    //Freedom of movement -- implement this in DGraph
 
     public DNode(Integer location) {
         this.location = location;
@@ -19,6 +20,14 @@ public class DNode {
 
     public void setDanger(double danger){
         this.danger += danger;
+    }
+
+    public double getFreedom(){
+        return freedom;
+    }
+
+    public void setFreedom(double freedom){
+        this.freedom = freedom;
     }
 
 
