@@ -16,7 +16,7 @@ public class Dijkstra {
         this.source = source;
     }
 
-    public int dijkstra(){
+    public int dijkstra(){ //Use Source and a destination node and valid the shortert path between these two?
         totalCosts.put(graph.getNode(source),0);
         maxPriorityQueue.add(source);
         ArrayList<DNode> nodes = graph.getNodes();
