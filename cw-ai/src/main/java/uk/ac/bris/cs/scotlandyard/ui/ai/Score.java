@@ -27,6 +27,7 @@ public class Score {
                 Dijkstra dijkstra = new Dijkstra(this.graph, i);
                 if(i!=j){
                     dijkstraGraph[i][j] = dijkstra.dijkstra();
+                    //needs some fleshing out -- what is this array used for
                 }
             }
         }
