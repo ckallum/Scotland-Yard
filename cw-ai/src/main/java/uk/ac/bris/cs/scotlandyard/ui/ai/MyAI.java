@@ -32,6 +32,8 @@ public class MyAI implements PlayerFactory {
 		public void makeMove(ScotlandYardView view, int location, Set<Move> moves,
 				Consumer<Move> callback) {
 
+			//moves = all valid moves?
+
 			/*view has all game info*/
 			/*callback is given some move, doesn't have to be array move*/
 			// TODO do something interesting here; find the best move

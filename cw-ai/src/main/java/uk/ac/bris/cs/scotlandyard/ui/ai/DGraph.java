@@ -10,16 +10,16 @@ import java.util.*;
 import static java.util.Objects.requireNonNull;
 
 public class DGraph {
-    private ScotlandYardView view;
-    private ArrayList<DNode> nodes = new ArrayList<>(this.size);
+    private List<DNode> nodes = new ArrayList<>(this.size);
     private ArrayList<DEdge> edges = new ArrayList<>();
     private Graph<Integer,Transport> graph;
     private int size;
+    private ArrayList<Integer> detectiveLocations;
 
-    public DGraph(ScotlandYardView view) {
-        this.view = view;
-        this.graph = view.getGraph();
+    public DGraph(State state) {
+        this.graph = state.getView().getGraph();
         this.size = graph.size();
+        this.detectiveLocations = state.DetectiveLocations();
 
         List<Node<Integer>> allNodes = graph.getNodes();
         for(Node<Integer> node : allNodes){
@@ -31,42 +31,40 @@ public class DGraph {
             temp.setTicketValue(edge.data());
             edges.add(requireNonNull(temp));
         }
-        weightNodes(getDetectiveLocations(), 0);
+        for (DNode node : nodes){
+            node.setDanger(0);
+        }
+        weightNodeDanger(state.DetectiveLocations(),Collections.EMPTY_LIST,0);
     }
 
-    private void weightNodes(ArrayList<Integer> nodes, double multiplier){
+    private void weightNodeDanger(ArrayList<Integer> nodes, List<Integer> visited, double danger){
+        List<Integer> v = visited;
+        //Higher the Danger the safer the node is
         for(Integer location:nodes){
-            if(this.nodes.get(location).getMultiplier()>0){
-                this.nodes.get(location).setMultiplier(multiplier-0.25);
+            if(!detectiveLocations.contains(location)){
+                if(visited.contains(location)){
+                    this.nodes.get(location).setDanger(danger-0.1);
+                }
+                 else {
+                    this.nodes.get(location).setDanger(danger);
+                    v.add(location);
+                }
             }
-            else {
-                this.nodes.get(location).setMultiplier(multiplier);
-            }
-            double m = multiplier+ 0.5;
+            double m = danger + 0.2;
             Collection<Edge<Integer,Transport>> neighbours = new ArrayList<>(graph.getEdgesFrom(new Node<>(location)));
             for (Edge<Integer,Transport> edge : neighbours){
                 ArrayList<Integer>neighbourNodes = new ArrayList<>();
                 neighbourNodes.add(edge.destination().value());
-                weightNodes(neighbourNodes, m);
+                weightNodeDanger(neighbourNodes,v, m);
             }
         }
-    }
-
-    public ArrayList<Integer> getDetectiveLocations(){
-        ArrayList<Integer> detectiveLocations = new ArrayList<>();
-        for(Colour colour: view.getPlayers()){
-            if(!colour.isMrX()){
-                detectiveLocations.add(view.getPlayerLocation(colour).orElse(0));
-            }
-        }
-        return detectiveLocations;
     }
 
     public ArrayList<DEdge> getEdges() {
         return requireNonNull(edges);
     }
 
-    public ArrayList<DNode> getNodes() {
+    public List<DNode> getNodes() {
         return requireNonNull(nodes);
     }
 
