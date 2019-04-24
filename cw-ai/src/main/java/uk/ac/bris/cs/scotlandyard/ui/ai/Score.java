@@ -11,9 +11,10 @@ public class Score {
     private ScotlandYardView view;
     private DGraph graph;
     private int source;
-    private final int[][] dijkstraGraph = new int[200][200]; /* Stores the minimum distances/weightings from two nodes
+    private final int[][] dijkstraGraph = new int[200][200];/* Stores the minimum distances/weightings from two nodes
                                                                 Use Dijkstras to calculate minimum score between two nodes
     */
+    //ValidMoves?
     public Score(ScotlandYardView view, int mrxLocation, DGraph graph ) { //Use state as input?
         this.view = view;
         this.graph = graph;

@@ -13,6 +13,7 @@ public class State {
     private ArrayList<Integer> detectiveLocations;
 //    private Integer mrxLocation;
     private ScotlandYardView view;
+    //validMoves?
 
     public State(ScotlandYardView view) {
         this.detectiveLocations = findDetectiveLocations(view);
