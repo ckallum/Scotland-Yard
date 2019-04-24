@@ -21,6 +21,17 @@ public class Score {
         //fillDijkstraGraph on initiation using method below
     }
 
+    public void calculate(){
+        for (int i = 0; i<200; i++){
+            for (int j = 0; j<200; j++){
+                Dijkstras dijkstra = new Dijkstras(this.graph, i);
+                if(i!=j){
+                    dijkstraGraph[i][j] = dijkstra.dijkstras();
+                }
+            }
+        }
+    }
+
     /*
     * Double for loop to find each node, dijkstraGraph[i][j] = dijkstraCalculate(DGraph graph, i, j)*/
 

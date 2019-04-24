@@ -10,7 +10,7 @@ import java.util.*;
 import static java.util.Objects.requireNonNull;
 
 public class DGraph {
-    private List<DNode> nodes = new ArrayList<>(this.size);
+    private ArrayList<DNode> nodes = new ArrayList<>(this.size);
     private ArrayList<DEdge> edges = new ArrayList<>();
     private Graph<Integer,Transport> graph;
     private int size;
@@ -64,7 +64,7 @@ public class DGraph {
         return requireNonNull(edges);
     }
 
-    public List<DNode> getNodes() {
+    public ArrayList<DNode> getNodes() {
         return requireNonNull(nodes);
     }
 
