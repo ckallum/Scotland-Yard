@@ -14,7 +14,7 @@ public class Score {
     private final int[][] dijkstraGraph = new int[200][200]; /* Stores the minimum distances/weightings from two nodes
                                                                 Use Dijkstras to calculate minimum score between two nodes
     */
-    public Score(ScotlandYardView view, int mrxLocation, DGraph graph) {
+    public Score(ScotlandYardView view, int mrxLocation, DGraph graph ) { //Use state as input?
         this.view = view;
         this.graph = graph;
         this.source = mrxLocation;
@@ -32,6 +32,8 @@ public class Score {
             }
         }
     }
+
+    //FindMax to get best move- move has to be in withing valid moves?
 
     /*
     * Double for loop to find each node, dijkstraGraph[i][j] = dijkstraCalculate(DGraph graph, i, j)*/
