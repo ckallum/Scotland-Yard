@@ -1,6 +1,5 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.Node;
@@ -32,30 +31,30 @@ public class DGraph {
             edges.add(requireNonNull(temp));
         }
         for (DNode node : nodes){
-            node.setDanger(0);
+            node.addSafety(0);
         }
-        weightNodeDanger(state.DetectiveLocations(),Collections.EMPTY_LIST,0);
+        weightNodeSafety(state.DetectiveLocations(),Collections.emptyList(),0);
     }
 
-    private void weightNodeDanger(ArrayList<Integer> nodes, List<Integer> visited, double danger){
-        List<Integer> v = visited;
-        //Higher the Danger the safer the node is
+    private void weightNodeSafety(ArrayList<Integer> nodes, List<Integer> visited, double safety){
+        //Higher the Safety the safer the node is
         for(Integer location:nodes){
             if(!detectiveLocations.contains(location)){
                 if(visited.contains(location)){
-                    this.nodes.get(location).setDanger(danger-0.1);
+                    if(safety < 0.8) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
+                        this.nodes.get(location).addSafety(-0.1);
+                    }
                 }
                  else {
-                    this.nodes.get(location).setDanger(danger);
-                    v.add(location);
+                    this.nodes.get(location).addSafety(safety);
+                    visited.add(location);
                 }
             }
-            double m = danger + 0.2;
             Collection<Edge<Integer,Transport>> neighbours = new ArrayList<>(graph.getEdgesFrom(new Node<>(location)));
             for (Edge<Integer,Transport> edge : neighbours){
                 ArrayList<Integer>neighbourNodes = new ArrayList<>();
                 neighbourNodes.add(edge.destination().value());
-                weightNodeDanger(neighbourNodes,v, m);
+                weightNodeSafety(neighbourNodes,visited, safety+0.2);
             }
         }
     }
@@ -72,7 +71,6 @@ public class DGraph {
         return nodes.get(location);
     }
 
-    @NonNull
     public int getSize() {
         return size;
     }
