@@ -6,17 +6,19 @@ import java.util.*;
 public class Dijkstra {
         private DGraph graph;
         private int source;
+        private int destination;
         private Map<DNode, Integer> totalCosts = new HashMap<>(graph.getSize());
         private MinMaxPriorityQueue<Integer> maxPriorityQueue;
         private Set<Integer> visited = new HashSet<>();
 
 
-    public Dijkstra(DGraph graph, int source) {
+    public Dijkstra(DGraph graph, int source, int destination) {
         this.graph = graph;
         this.source = source;
+        this.destination = destination;
     }
 
-    public int dijkstra(){ //Use Source and a destination node and valid the shortert path between these two?
+    public void dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
         totalCosts.put(graph.getNode(source),0);
         maxPriorityQueue.add(source);
         ArrayList<DNode> nodes = graph.getNodes();
@@ -28,6 +30,7 @@ public class Dijkstra {
 
         while(!maxPriorityQueue.isEmpty()){
             visited.add(maxPriorityQueue.peekFirst());
+
             for(DEdge edge:graph.getEdges()){
                 if(edge.getSource().getLocation().equals(maxPriorityQueue.peekFirst())){
                     if(!visited.contains(edge.getDestination().getLocation())){
@@ -36,9 +39,7 @@ public class Dijkstra {
                 }
             }
             maxPriorityQueue.removeFirst();
-
         }
-        return 0;
-
     }
+
 }

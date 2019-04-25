@@ -1,5 +1,4 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.Node;
