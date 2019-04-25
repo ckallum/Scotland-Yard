@@ -8,10 +8,10 @@ import java.util.*;
 import static java.util.Objects.requireNonNull;
 
 public class DGraph {
-    private ArrayList<DNode> nodes = new ArrayList<>(this.size);
+    private int size;
+    private ArrayList<DNode> nodes = new ArrayList<>();
     private ArrayList<DEdge> edges = new ArrayList<>();
     private Graph<Integer,Transport> graph;
-    private int size;
     private ArrayList<Integer> detectiveLocations;
 
     public DGraph(State state) {
