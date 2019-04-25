@@ -32,6 +32,8 @@ public class MyAI implements PlayerFactory {
 		public void makeMove(ScotlandYardView view, int location, Set<Move> moves,
 				Consumer<Move> callback) {
 
+			State state = new State(view);
+			Score score = new Score(state);
 			//moves = all valid moves?
 
 			/*view has all game info*/
@@ -39,8 +41,7 @@ public class MyAI implements PlayerFactory {
 			// TODO do something interesting here; find the best move
 			// picks a random move
 			//callback accept some chosen move
-			Move move = new TicketMove(Colour.BLACK, Ticket.BUS, 59);
-			callback.accept(move);
+			callback.accept(score.getMove());
 		}
 	}
 	@Override

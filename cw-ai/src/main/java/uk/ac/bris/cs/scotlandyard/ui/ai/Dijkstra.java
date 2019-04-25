@@ -59,7 +59,7 @@ public class Dijkstra {
 
 
     private double totalEdgeCost(DEdge edge, DNode destination){
-        return (edge.getTicketValue()+destination.getFreedom())*destination.getSafety();
+        return (edge.getTransportValue()+destination.getFreedom())*destination.getSafety();
     }
 
     public double getCost(DNode destination){

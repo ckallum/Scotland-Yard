@@ -2,6 +2,10 @@ package uk.ac.bris.cs.scotlandyard.ui.ai;
 
 //NEED TO DO SOMETHING ON DOUBLE MOVE
 
+import uk.ac.bris.cs.scotlandyard.model.*;
+
+import java.util.concurrent.BlockingDeque;
+
 public class Score {
     private DGraph graph;
     private Integer source;
@@ -9,8 +13,8 @@ public class Score {
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
     //ValidMoves?
-    public Score(State state, DGraph graph ) { //Use state as input?
-        this.graph = graph;
+    public Score(State state) { //Use state as input?
+        this.graph = state.getGraph();
         this.source = state.getMrxLocation();
         calculate();
     }
@@ -29,7 +33,7 @@ public class Score {
         }
     }
 
-    public double getScore(){
+    private int getBestDestination(){
         int bestMove = Integer.MIN_VALUE;
         double max = 0;
         for (DEdge edge:graph.getEdges()){
@@ -41,6 +45,15 @@ public class Score {
             }
         }
         return bestMove;
+    }
+
+    public Move getMove(){
+        for(DEdge edge:graph.getEdges()){
+            if(edge.getSource().getLocation().equals(source) && edge.getDestination().getLocation().equals(getBestDestination())){
+                return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
+            }
+        }
+        return null;
     }
 
     //FindMax to get best move- move has to be in withing valid moves?

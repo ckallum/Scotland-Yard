@@ -25,8 +25,7 @@ public class DGraph {
         }
         Collection<Edge<Integer,Transport>> allEdges = graph.getEdges();
         for(Edge<Integer,Transport> edge : allEdges){
-            DEdge temp = new DEdge(edge.source(), edge.destination());
-            temp.setTicketValue(edge.data());
+            DEdge temp = new DEdge(edge);
             edges.add(requireNonNull(temp));
         }
         for (DNode node : nodes){

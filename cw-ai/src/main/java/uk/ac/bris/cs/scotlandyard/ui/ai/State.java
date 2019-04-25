@@ -14,13 +14,14 @@ import java.util.concurrent.BlockingDeque;
 public class State {
     private ArrayList<Integer> detectiveLocations;
     private ScotlandYardView view;
-    private Move[] validMoves;
     private Integer mrxLocation;
+    private DGraph graph;
 
     public State(ScotlandYardView view) {
         this.detectiveLocations = findDetectiveLocations(view);
         this.view = view;
         this.mrxLocation = view.getPlayerLocation(Colour.BLACK).orElse(0);
+        this.graph = new DGraph(this);
     }
 
     public ScotlandYardView getView() {
@@ -45,5 +46,7 @@ public class State {
         return mrxLocation;
     }
 
-
+    public DGraph getGraph() {
+        return graph;
+    }
 }

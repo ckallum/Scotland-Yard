@@ -7,31 +7,43 @@ import uk.ac.bris.cs.scotlandyard.model.*;
 public class DEdge {
     private DNode source;
     private DNode destination;
-    private double TicketValue;
+    private Ticket ticket;
+    private double TransportValue;
+    private Transport transport;
 
-    public DEdge(Node<Integer> source, Node<Integer> destination) {
-        this.source = new DNode(source.value());
-        this.destination = new DNode(destination.value());
+    public DEdge(Edge<Integer, Transport> edge) {
+        this.source = new DNode(edge.source().value());
+        this.destination = new DNode(edge.destination().value());
+        setTransportValue(edge.data());
+        setTransport(edge.data());
     }
 
     public DNode getDestination() {
         return destination;
     }
 
-    public void setTicketValue(Transport t) {
+    public void setTransportValue(Transport t) {
         if(t.equals(Transport.BUS)){
-            this.TicketValue = 1.25;
+            this.TransportValue = 1.25;
         }
         if(t.equals(Transport.TAXI)){
-            this.TicketValue = 1;
+            this.TransportValue = 1;
         }
         if(t.equals(Transport.UNDERGROUND)){
-            this.TicketValue = 1.75;
+            this.TransportValue = 1.75;
         }
     }
 
-    public double getTicketValue() {
-        return TicketValue;
+    public double getTransportValue() {
+        return TransportValue;
+    }
+
+    public void setTransport(Transport t) {
+        this.transport = t;
+    }
+
+    public Transport getTransport() {
+        return transport;
     }
 
     public DNode getSource() {
