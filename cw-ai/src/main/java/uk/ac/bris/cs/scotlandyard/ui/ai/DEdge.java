@@ -30,6 +30,10 @@ public class DEdge {
         }
     }
 
+    public double getTicketValue() {
+        return TicketValue;
+    }
+
     public DNode getSource() {
         return source;
     }

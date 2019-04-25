@@ -33,6 +33,7 @@ public class DGraph {
             node.addSafety(0);
         }
         weightNodeSafety(state.DetectiveLocations(),Collections.emptyList(),0);
+        weightNodeFreedom();
     }
 
     private void weightNodeSafety(ArrayList<Integer> nodes, List<Integer> visited, double safety){
@@ -54,6 +55,20 @@ public class DGraph {
                 ArrayList<Integer>neighbourNodes = new ArrayList<>();
                 neighbourNodes.add(edge.destination().value());
                 weightNodeSafety(neighbourNodes,visited, safety+0.2);
+            }
+        }
+    }
+
+    public void weightNodeFreedom(){
+        for (DNode node : nodes){
+            int count = 0;
+            for (DEdge edge : edges){
+                if(edge.getSource().getLocation().equals(node.getLocation())){
+                    if (!detectiveLocations.contains(edge.getDestination())) {
+                        count++;
+                    }
+                }
+                node.setFreedom(count);
             }
         }
     }
