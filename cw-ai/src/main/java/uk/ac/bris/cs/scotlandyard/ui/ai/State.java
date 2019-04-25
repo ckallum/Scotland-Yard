@@ -1,9 +1,11 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 
 import uk.ac.bris.cs.scotlandyard.model.Colour;
+import uk.ac.bris.cs.scotlandyard.model.Move;
 import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
 
 import java.util.ArrayList;
+import java.util.concurrent.BlockingDeque;
 
 /*Class to implement the current State of the game and changes to the player and game view
     - Will Store current mrXLocation and DetectiveLocations and current graph?
@@ -11,14 +13,14 @@ import java.util.ArrayList;
 *   - Possibly implement MoveVisitor to update MrXLocation.*/
 public class State {
     private ArrayList<Integer> detectiveLocations;
-//    private Integer mrxLocation;
     private ScotlandYardView view;
-    //validMoves?
+    private Move[] validMoves;
+    private Integer mrxLocation;
 
     public State(ScotlandYardView view) {
         this.detectiveLocations = findDetectiveLocations(view);
-//        this.mrxLocation = view.getPlayerLocation(Colour.BLACK);
         this.view = view;
+        this.mrxLocation = view.getPlayerLocation(Colour.BLACK).orElse(0);
     }
 
     public ScotlandYardView getView() {
@@ -38,4 +40,10 @@ public class State {
     public ArrayList<Integer> DetectiveLocations() {
         return detectiveLocations;
     }
+
+    public Integer getMrxLocation() {
+        return mrxLocation;
+    }
+
+
 }

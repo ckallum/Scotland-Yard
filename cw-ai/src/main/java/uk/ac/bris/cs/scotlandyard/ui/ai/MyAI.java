@@ -39,7 +39,8 @@ public class MyAI implements PlayerFactory {
 			// TODO do something interesting here; find the best move
 			// picks a random move
 			//callback accept some chosen move
-			callback.accept(new ArrayList<>(moves).get(random.nextInt(moves.size())));
+			Move move = new TicketMove(Colour.BLACK, Ticket.BUS, 59);
+			callback.accept(move);
 		}
 	}
 	@Override
