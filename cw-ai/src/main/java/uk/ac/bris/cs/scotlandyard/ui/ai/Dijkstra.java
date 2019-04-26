@@ -5,70 +5,49 @@ import java.util.*;
 public class Dijkstra {
         private DGraph graph;
         private DNode source; // i in distances[i][j]
-        private Map<DNode, Double> totalCosts;
-        private ArrayList<DNode> visited = new ArrayList<>();
+        private int[]distances;
+        private Set<DNode> visited = new HashSet<>();
+        private PriorityQueue<DNode> maxPQ;
 
 
     public Dijkstra(DGraph graph, int source) {
         this.graph = graph;
         this.source = graph.getNode(source);
-        this.totalCosts = dijkstra();
+        this.distances = new int[graph.getSize()];
+
     }
 
-    public Map<DNode,Double> dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
-        Map<DNode, Double> maxPriorityQueue = new HashMap<>(graph.getSize()+1);
-        Map<DNode, Double> totalCosts = new HashMap<>(graph.getSize()+1);
-        totalCosts.put(source,0.0);
-        maxPriorityQueue.put(source, 0.0);
-        Set<DNode> nodes = graph.getNodes();
-        for(DNode node : nodes){
-            if (node!= source){
-                totalCosts.put(node, Double.MIN_VALUE);
+    public void dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
+        List<DNode> neighbourNodes = new ArrayList<>();
+        for(DEdge edge : graph.getEdges()){
+            if(edge.getSource().equals(source)){
+                neighbourNodes.add(edge.getDestination());
             }
         }
 
-        while(!maxPriorityQueue.isEmpty()){
-            visited.add(findMax(maxPriorityQueue));
-            DNode currentMax = findMax(maxPriorityQueue);
-            maxPriorityQueue.remove(currentMax);
-            for(DEdge edge:graph.getEdges()){
-                if(edge.getSource().equals(currentMax)){
-                    DNode neighbour= edge.getDestination();
-                    if(!visited.contains(neighbour)){
-                        double tempCost = totalCosts.get(neighbour)+totalEdgeCost(edge, neighbour);
-                        if(tempCost>totalCosts.get(neighbour)){
-                            totalCosts.put(neighbour, tempCost);
-                            maxPriorityQueue.put(neighbour, totalCosts.get(neighbour));
-                        }
+        for(int i =0; i<graph.getSize(); i++){
+            distances[i] = Integer.MIN_VALUE;
+        }
+        distances[source.getLocation()] = 0;
+        maxPQ.add(source);
+        while(visited.size() != graph.getSize()){
+            DNode currentMax = maxPQ.remove();
+            visited.add(currentMax);
+            for(int i = 0; i<neighbourNodes.size(); i++){
+                DNode neighbour = neighbourNodes.get(i);
+                if(!visited.contains(neighbour)){
+                    int distance = distances[neighbour.getLocation()]+1;
+                    if(distance > distances[neighbour.getLocation()]){
+                        distances[neighbour.getLocation()] = distance;
                     }
+                    maxPQ.add(neighbour);
                 }
             }
         }
-        return totalCosts;
-    }
-
-    private DNode findMax(Map<DNode, Double> maxPQ){
-        double tempMax = Double.MIN_VALUE;
-        DNode current = null;
-        for(DNode node : graph.getNodes()){
-            if(maxPQ.containsKey(node) && maxPQ.get(node)>tempMax){
-                tempMax = maxPQ.get(node);
-            }
-            current = node;
-        }
-        return current;
-    }
-
-
-
-    private double totalEdgeCost(DEdge edge, DNode destination){
-        return (destination.getFreedom())*destination.getSafety();
-//        return (edge.getTransportValue()+destination.getFreedom());
-
     }
 
     public double getCost(DNode destination){
-        return (totalCosts.get(destination));
+        return (distances[destination.getLocation()]*(destination.getFreedom()+destination.getSafety()));
     }
 
 
