@@ -7,7 +7,7 @@ public class DNode {
 
     public DNode(Integer location) {
         this.location = location;
-        this.safety = 0;
+        this.safety = 1.0;
     }
 
     public Integer getLocation() {
@@ -18,8 +18,8 @@ public class DNode {
         return safety;
     }
 
-    public void addSafety(double safety){
-        this.safety += safety;
+    public void subtractSafety(double danger){
+        this.safety -= danger;
     }
 
     public int getFreedom(){

@@ -20,7 +20,7 @@ public class Dijkstra {
         Map<DNode, Double> totalCosts = new HashMap<>(graph.getSize()+1);
         totalCosts.put(source,0.0);
         maxPriorityQueue.put(source, 0.0);
-        ArrayList<DNode> nodes = graph.getNodes();
+        Set<DNode> nodes = graph.getNodes();
         for(DNode node : nodes){
             if (node!= source){
                 totalCosts.put(node, Double.MIN_VALUE);
@@ -60,8 +60,9 @@ public class Dijkstra {
     }
 
 
+
     private double totalEdgeCost(DEdge edge, DNode destination){
-        return (edge.getTransportValue()+destination.getFreedom())*destination.getSafety();
+        return (destination.getFreedom())*destination.getSafety();
 //        return (edge.getTransportValue()+destination.getFreedom());
 
     }
