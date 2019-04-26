@@ -32,16 +32,20 @@ public class MyAI implements PlayerFactory {
 		public void makeMove(ScotlandYardView view, int location, Set<Move> moves,
 				Consumer<Move> callback) {
 
-			State state = new State(view);
-			Score score = new Score(state);
-			//moves = all valid moves?
-
-			/*view has all game info*/
-			/*callback is given some move, doesn't have to be array move*/
-			// TODO do something interesting here; find the best move
-			// picks a random move
-			//callback accept some chosen move
-			callback.accept(score.getMove());
+//			State state = new State(view);
+//			Score score = new Score(state);
+//			Move bestMove = score.getMove();
+//			//moves = all valid moves?
+//
+//			/*view has all game info*/
+//			/*callback is given some move, doesn't have to be array move*/
+//			// TODO do something interesting here; find the best move
+//			// picks a random move
+//			//callback accept some chosen move
+//			if (bestMove == null){
+//				bestMove = new ArrayList<>(moves).get(random.nextInt(moves.size()));
+//			}
+			callback.accept(new ArrayList<>(moves).get(random.nextInt(moves.size())));
 		}
 	}
 	@Override
