@@ -179,7 +179,7 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
     public void accept(Move move) {
         requireNonNull(move);
         if (!validMoves(players.get(currentPlayer)).contains(move)) throw new IllegalArgumentException("invalid move");
-        //Type of Double Dispatch using Visitor Pattern to identify the type of the move.
+        //Type of Double Dispatch using Visitor Pattern to identify the type of the move.x
         move.visit(this);
         if (isGameOver()) {
             for (Spectator s : spectators) {

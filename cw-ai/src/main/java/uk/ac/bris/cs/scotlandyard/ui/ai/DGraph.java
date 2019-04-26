@@ -3,25 +3,31 @@ import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.Node;
 import uk.ac.bris.cs.scotlandyard.model.*;
+
+import java.lang.reflect.Array;
 import java.util.*;
 
 import static java.util.Objects.requireNonNull;
 
 public class DGraph {
     private int size;
-    private ArrayList<DNode> nodes = new ArrayList<>();
-    private ArrayList<DEdge> edges = new ArrayList<>();
     private Graph<Integer,Transport> graph;
+    private ArrayList<DNode> nodes = new ArrayList<>(size+1);
+    private ArrayList<DEdge> edges = new ArrayList<>();
     private ArrayList<Integer> detectiveLocations;
+    private ArrayList<Integer> visited=new ArrayList<>(size+1);
+    private ScotlandYardView view;
 
     public DGraph(State state) {
         this.graph = state.getView().getGraph();
+        this.view = state.getView();
         this.size = graph.size();
-        this.detectiveLocations = state.DetectiveLocations();
+        this.detectiveLocations = findDetectiveLocations();
+
 
         List<Node<Integer>> allNodes = graph.getNodes();
         for(Node<Integer> node : allNodes){
-            this.nodes.add(node.value(),new DNode(requireNonNull(node.value())));
+            this.nodes.add(new DNode(requireNonNull(node.value())));
         }
         Collection<Edge<Integer,Transport>> allEdges = graph.getEdges();
         for(Edge<Integer,Transport> edge : allEdges){
@@ -31,15 +37,15 @@ public class DGraph {
         for (DNode node : nodes){
             node.addSafety(0);
         }
-        weightNodeSafety(state.DetectiveLocations(),Collections.emptyList(),0);
+        weightNodeSafety(findDetectiveLocations(),0);
         weightNodeFreedom();
     }
 
-    private void weightNodeSafety(ArrayList<Integer> nodes, List<Integer> visited, double safety){
+    private void weightNodeSafety(ArrayList<Integer> n, double safety){
         //Higher the Safety the safer the node is
-        for(Integer location:nodes){
+        for(Integer location:n){
             if(!detectiveLocations.contains(location)){
-                if(visited.contains(location)){
+                if(this.visited.contains(location)){
                     if(safety < 0.8) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
                         this.nodes.get(location).addSafety(-0.1);
                     }
@@ -49,11 +55,13 @@ public class DGraph {
                     visited.add(location);
                 }
             }
-            Collection<Edge<Integer,Transport>> neighbours = new ArrayList<>(graph.getEdgesFrom(new Node<>(location)));
-            for (Edge<Integer,Transport> edge : neighbours){
-                ArrayList<Integer>neighbourNodes = new ArrayList<>();
+            Collection<Edge<Integer,Transport>> connectingEdges = graph.getEdgesFrom(graph.getNode(location));
+            ArrayList<Integer>neighbourNodes = new ArrayList<>();
+            for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
-                weightNodeSafety(neighbourNodes,visited, safety+0.2);
+            }
+            if(safety<2.0) {
+                weightNodeSafety(neighbourNodes, safety + 0.2);
             }
         }
     }
@@ -70,6 +78,16 @@ public class DGraph {
                 node.setFreedom(count);
             }
         }
+    }
+
+    private ArrayList<Integer> findDetectiveLocations() {
+        ArrayList<Integer> detectiveLocations = new ArrayList<>();
+        for(Colour colour: view.getPlayers()){
+            if(colour!=Colour.BLACK){
+                detectiveLocations.add(view.getPlayerLocation(colour).orElse(0));
+            }
+        }
+        return (detectiveLocations);
     }
 
     public ArrayList<DEdge> getEdges() {
