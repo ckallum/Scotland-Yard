@@ -59,7 +59,7 @@ public class DGraph {
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            if(safety<2.0) {
+            if(safety<1.0) {
                 weightNodeSafety(neighbourNodes, safety + 0.2);
             }
         }
@@ -78,7 +78,7 @@ public class DGraph {
         for (DNode node : nodes){
             int count = 0;
             for (DEdge edge : edges){
-                if(edge.getSource().getLocation().equals(node.getLocation())){
+                if(edge.getSource().equals(node)){
                     if (!detectiveLocations.contains(edge.getDestination().getLocation())) {
                         count++;
                     }
@@ -107,7 +107,12 @@ public class DGraph {
     }
 
     public DNode getNode(int location){
-        return nodes.get(location);
+        for(DNode node : nodes){
+            if (node.getLocation().equals(location)){
+                return node;
+            }
+        }
+        return null;
     }
 
     public int getSize() {

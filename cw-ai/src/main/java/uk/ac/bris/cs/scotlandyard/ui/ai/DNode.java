@@ -31,4 +31,8 @@ public class DNode {
     }
 
 
+    public boolean equals(DNode node){
+        return (node.getLocation().equals(this.location));
+    }
+
 }

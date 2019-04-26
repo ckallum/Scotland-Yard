@@ -1,22 +1,23 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
-import com.google.common.collect.MinMaxPriorityQueue;
 import java.util.ArrayList;
 import java.util.*;
 
 public class Dijkstra {
         private DGraph graph;
         private DNode source; // i in distances[i][j]
-        private Map<DNode, Double> totalCosts = new HashMap<>(graph.getSize());
-        private Map<DNode, Double> maxPriorityQueue = new HashMap<>(graph.getSize());
-        private Set<DNode> visited = new HashSet<>();
+        private Map<DNode, Double> totalCosts;
+        private ArrayList<DNode> visited = new ArrayList<>();
 
 
     public Dijkstra(DGraph graph, int source) {
         this.graph = graph;
         this.source = graph.getNode(source);
+        this.totalCosts = dijkstra();
     }
 
-    public void dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
+    public Map<DNode,Double> dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
+        Map<DNode, Double> maxPriorityQueue = new HashMap<>(graph.getSize()+1);
+        Map<DNode, Double> totalCosts = new HashMap<>(graph.getSize()+1);
         totalCosts.put(source,0.0);
         maxPriorityQueue.put(source, 0.0);
         ArrayList<DNode> nodes = graph.getNodes();
@@ -43,13 +44,14 @@ public class Dijkstra {
                 }
             }
         }
+        return totalCosts;
     }
 
     private DNode findMax(Map<DNode, Double> maxPQ){
         double tempMax = Double.MIN_VALUE;
         DNode current = null;
         for(DNode node : graph.getNodes()){
-            if(maxPQ.get(node)>tempMax){
+            if(maxPQ.containsKey(node) && maxPQ.get(node)>tempMax){
                 tempMax = maxPQ.get(node);
             }
             current = node;
@@ -60,6 +62,8 @@ public class Dijkstra {
 
     private double totalEdgeCost(DEdge edge, DNode destination){
         return (edge.getTransportValue()+destination.getFreedom())*destination.getSafety();
+//        return (edge.getTransportValue()+destination.getFreedom());
+
     }
 
     public double getCost(DNode destination){

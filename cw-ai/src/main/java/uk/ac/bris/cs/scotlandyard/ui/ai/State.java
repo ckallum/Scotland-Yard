@@ -18,11 +18,13 @@ public class State {
     private ScotlandYardView view;
     private Integer mrxLocation;
     private DGraph graph;
+    private boolean currentRound;
 
-    public State(ScotlandYardView view) {
+    public State(ScotlandYardView view, int location) {
         this.view = view;
-        this.mrxLocation = view.getPlayerLocation(Colour.BLACK).orElse(0);
+        this.mrxLocation = location;
         this.graph = new DGraph(this);
+        currentRound = findCurrentRound();
 
     }
 
@@ -30,6 +32,9 @@ public class State {
         return view;
     }
 
+    private boolean findCurrentRound(){
+        return (this.view.getRounds().get(view.getCurrentRound()));
+    }
 
     public Integer getMrxLocation() {
         return mrxLocation;

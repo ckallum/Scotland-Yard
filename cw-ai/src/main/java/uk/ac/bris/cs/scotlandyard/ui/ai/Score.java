@@ -26,24 +26,24 @@ public class Score {
                 dijkstra.dijkstra();
                 if(i!=j){
                     dijkstraGraph[i][j] = dijkstra.getCost(graph.getNode(j));
-                    //needs some fleshing out -- what is this array used for
                 }
                 else dijkstraGraph[i][j] = 0;
             }
         }
     }
 
-    private int getBestDestination(){
-        int bestMove = Integer.MIN_VALUE;
+    private Integer getBestDestination(){
+        Integer bestMove = Integer.MIN_VALUE;
         double max = 0;
         for (DEdge edge:graph.getEdges()){
             if(edge.getSource().getLocation().equals(source)){
-                if(dijkstraGraph[source][edge.getSource().getLocation()] >max){
-                    max = dijkstraGraph[source][edge.getSource().getLocation()];
+                if(dijkstraGraph[source][edge.getDestination().getLocation()] > max){
+                    max = dijkstraGraph[source][edge.getDestination().getLocation()];
                     bestMove = edge.getSource().getLocation();
                 }
             }
         }
+        if(bestMove!=null) throw new NullPointerException("testing");
         return bestMove;
     }
 
@@ -51,6 +51,15 @@ public class Score {
         //if node score is at certain limit create double mnove instead.
         for(DEdge edge:graph.getEdges()){
             if(edge.getSource().getLocation().equals(source) && edge.getDestination().getLocation().equals(getBestDestination())){
+//                if() {
+//                    return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
+//                }
+//                else {
+//                    Integer location1 = getBestDestination()
+//                    this.source = location1;
+//                    //Work on this.
+//                    return (new DoubleMove())
+//                }
                 return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
             }
         }

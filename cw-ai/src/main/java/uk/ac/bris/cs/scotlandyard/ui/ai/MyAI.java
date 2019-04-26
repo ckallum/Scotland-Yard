@@ -12,7 +12,6 @@ import uk.ac.bris.cs.scotlandyard.model.*;
 // TODO name the AI
 @ManagedAI("MrXAI")
 public class MyAI implements PlayerFactory {
-	private Score scorer;
 
 	// TODO create a new player here
 	@Override
@@ -31,21 +30,20 @@ public class MyAI implements PlayerFactory {
 		@Override
 		public void makeMove(ScotlandYardView view, int location, Set<Move> moves,
 				Consumer<Move> callback) {
+			// TODO do something interesting here; find the best move
 
-//			State state = new State(view);
-//			Score score = new Score(state);
-//			Move bestMove = score.getMove();
-//			//moves = all valid moves?
-//
-//			/*view has all game info*/
-//			/*callback is given some move, doesn't have to be array move*/
-//			// TODO do something interesting here; find the best move
-//			// picks a random move
-//			//callback accept some chosen move
-//			if (bestMove == null){
-//				bestMove = new ArrayList<>(moves).get(random.nextInt(moves.size()));
-//			}
-			callback.accept(new ArrayList<>(moves).get(random.nextInt(moves.size())));
+
+			State state = new State(view, location);
+			Score score = new Score(state);
+			Move bestMove = score.getMove();
+			if(!moves.contains(bestMove)) throw new IllegalArgumentException("Wrong");
+
+			// picks a random move
+			//callback accept some chosen move
+			if (bestMove == null){
+				bestMove = new ArrayList<>(moves).get(random.nextInt(moves.size()));
+			}
+			callback.accept(bestMove);
 		}
 	}
 	@Override
@@ -53,13 +51,5 @@ public class MyAI implements PlayerFactory {
 		return Collections.emptyList();
 	}
 
-	@Override
-	public void finish(){
-
-	}
-
-	@Override
-	public void ready(Visualiser visualiser, ResourceProvider provider){
-	}
 
 }
