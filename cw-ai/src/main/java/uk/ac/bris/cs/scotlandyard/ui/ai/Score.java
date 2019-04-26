@@ -48,6 +48,7 @@ public class Score {
     }
 
     public Move getMove(){
+        //if node score is at certain limit create double mnove instead.
         for(DEdge edge:graph.getEdges()){
             if(edge.getSource().getLocation().equals(source) && edge.getDestination().getLocation().equals(getBestDestination())){
                 return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
