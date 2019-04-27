@@ -10,8 +10,8 @@ import java.util.concurrent.BlockingDeque;
 
 public class Score {
     private Graph<Integer, Transport> graph;
-    private State s;
-    private Integer source;
+    private State state;
+    private int source;
     private final double[] dijkstraGraph = new double[200];/* Stores the maximum distances/weightings from two nodes
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
@@ -19,14 +19,14 @@ public class Score {
     public Score(State state) { //Use state as input?
         this.graph = state.getGraph();
         this.source = state.getMrxLocation();
-        this.s = state;
+        this.state = state;
         calculate();
     }
 
     private void calculate(){
-        Dijkstra dijkstra = new Dijkstra(new DGraph(this.s), this.source);
-        for (int j = 0; j<200; j++){
-            dijkstra.dijkstra();
+        Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
+        dijkstra.dijkstra();
+        for (int j = 1; j<200; j++){
             if(source !=j) {
                 dijkstraGraph[j] = dijkstra.getCost(j);
             }
@@ -34,39 +34,23 @@ public class Score {
         }
     }
 
-    private Integer getBestDestination(){
-        Integer bestMove = Integer.MIN_VALUE;
-        double max = 0;
+    public Move getBestMove(){
+        int bestMove = -1;
+        Transport transport = null;
+        double max = -1;
         for (Edge<Integer, Transport> edge:graph.getEdges()){
-            if(edge.source().value().equals(source)){
+            if(edge.source().value() == source){
                 if(dijkstraGraph[edge.destination().value()] > max){
                     max = dijkstraGraph[edge.destination().value()];
                     bestMove = edge.destination().value();
+                    transport = edge.data();
                 }
             }
         }
-        if(bestMove!=null) throw new NullPointerException("testing");
-        return bestMove;
+        System.out.println(bestMove);
+        return (new TicketMove(Colour.BLACK, Ticket.fromTransport(transport), bestMove));
     }
 
-    public Move getMove(){
-        //if node score is at certain limit create double mnove instead.
-        for(Edge<Integer, Transport> edge:graph.getEdges()){
-            if(edge.source().value().equals(source) && edge.destination().value().equals(getBestDestination())){
-//                if() {
-//                    return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
-//                }
-//                else {
-//                    Integer location1 = getBestDestination()
-//                    this.source = location1;
-//                    //Work on this.
-//                    return (new DoubleMove())
-//                }
-                return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.data()), getBestDestination()));
-            }
-        }
-        return null;
-    }
 
     //FindMax to get best move- move has to be in withing valid moves?
 

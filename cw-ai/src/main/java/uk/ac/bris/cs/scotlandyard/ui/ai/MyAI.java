@@ -32,12 +32,9 @@ public class MyAI implements PlayerFactory {
 				Consumer<Move> callback) {
 			// TODO do something interesting here; find the best move
 
-
 			State state = new State(view, location);
 			Score score = new Score(state);
-			Move bestMove = score.getMove();
-			if(!moves.contains(bestMove)) throw new IllegalArgumentException("Wrong");
-
+			Move bestMove = score.getBestMove();
 			// picks a random move
 			//callback accept some chosen move
 			if (bestMove == null){

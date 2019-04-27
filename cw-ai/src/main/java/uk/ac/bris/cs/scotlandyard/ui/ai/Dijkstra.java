@@ -17,25 +17,26 @@ public class Dijkstra {
     public Dijkstra(DGraph Dgraph, Integer source) {
         this.graph = Dgraph;
         this.source = source;
-        this.distances = new int[graph.getSize()];
+        this.distances = new int[graph.getSize()+1];
         this.maxPQ = new PriorityQueue<>(graph.getSize());
 
     }
 
     public void dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
         List<Node<Integer>> neighbourNodes = new ArrayList<>();
-        Node<Integer> s = graph.getGraph().getNode(source);
+        Node<Integer> loc = graph.getGraph().getNode(source);
         for(Edge<Integer, Transport> edge : graph.getGraph().getEdgesFrom(graph.getGraph().getNode(source))){
             neighbourNodes.add(edge.destination());
         }
 
-        for(int i =0; i<graph.getSize(); i++){
-            distances[i] = Integer.MIN_VALUE;
+        for(int i =0; i<distances.length; i++){
+            distances[i] = 0;
         }
 
-        distances[s.value()] = 0;
-        maxPQ.add(s.value());
-        while(visited.size() != graph.getSize()){
+        distances[loc.value()] = 0;
+        maxPQ.add(loc.value());
+//        while(visited.size() != graph.getSize())
+        for(int count=0; count<200; count++){
             Integer temp = maxPQ.peek();
             Node<Integer> currentMax = graph.getGraph().getNode(temp);
             visited.add(currentMax);
@@ -52,8 +53,10 @@ public class Dijkstra {
         }
     }
 
-    public double getCost(Integer location){
-        return (distances[location]*(graph.getNode(location).getSafety()+graph.getNode(location).getFreedom()));
+
+
+    public double getCost(int location){
+        return (distances[location]*(graph.getNode(location).getFreedom())+graph.getNode(location).getSafety());
     }
 
 

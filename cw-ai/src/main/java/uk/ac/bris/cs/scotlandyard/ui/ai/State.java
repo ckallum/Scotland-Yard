@@ -10,7 +10,7 @@ import uk.ac.bris.cs.scotlandyard.model.Transport;
 *   - Possibly implement MoveVisitor to update MrXLocation.*/
 public class State {
     private ScotlandYardView v;
-    private Integer mrxLocation;
+    private int mrxLocation;
     private Graph<Integer, Transport> graph;
 
     public State(ScotlandYardView view, int location) {
@@ -24,7 +24,7 @@ public class State {
         return v;
     }
 
-    public Integer getMrxLocation() {
+    public int getMrxLocation() {
         return mrxLocation;
     }
 

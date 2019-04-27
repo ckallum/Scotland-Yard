@@ -1,6 +1,6 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 public class DNode {
-    private Integer location;
+    private int location;
     private double safety;
     private double freedom;
     //Freedom of movement -- implement this in DGraph
@@ -10,7 +10,7 @@ public class DNode {
         this.safety = 1.0;
     }
 
-    public Integer getLocation() {
+    public int getLocation() {
         return this.location;
     }
 
