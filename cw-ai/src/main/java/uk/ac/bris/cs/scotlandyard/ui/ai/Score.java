@@ -58,37 +58,28 @@ public class Score {
         return bestDestination;
     }
 
-    public Move getBestMove(){
+    public Move getBestMove() {
         Transport transport = null;
-        int bestDestination = getBestDestination(this.source);
-        for (Edge<Integer, Transport> edge:graph.getEdges()) {
-            if (edge.source().value()== this.source && edge.destination().value() == bestDestination) {
+        int firstDestination = getBestDestination(this.source);
+        for (Edge<Integer, Transport> edge : graph.getEdges()) {
+            if (edge.source().value() == this.source && edge.destination().value() == firstDestination)
+            System.out.println("Transport: "+edge.data().toString());{
                 transport = edge.data();
             }
         }
-        if(state.getMrXDoubleTickets()>0 && dGraph.getNode(bestDestination).getSafety()<0.45){
-            int secondDestination = getBestDestination(bestDestination);
+        if (state.getMrXDoubleTickets() > 0 && dGraph.getNode(firstDestination).getSafety() < 0.45) {
+            int secondDestination = getBestDestination(firstDestination);
             Transport transport2 = null;
-            for (Edge<Integer, Transport> edge:graph.getEdges()) {
-                if (edge.source().value()==bestDestination && edge.destination().value() == secondDestination) {
+            for (Edge<Integer, Transport> edge : graph.getEdges()) {
+                if (edge.source().value() == firstDestination && edge.destination().value() == secondDestination) {
                     transport2 = edge.data();
+                    System.out.println("Second move location:" + secondDestination);
+                    return (new DoubleMove(Colour.BLACK, Ticket.fromTransport(transport), firstDestination, Ticket.fromTransport(transport2), secondDestination));
                 }
-            }
 
-            if (dGraph.getNode(secondDestination).getSafety() > dGraph.getNode(bestDestination).getSafety()){
-                System.out.println("Second move location:" + secondDestination);
-                return (new DoubleMove(Colour.BLACK, Ticket.fromTransport(transport), bestDestination, Ticket.fromTransport(transport2), secondDestination));
             }
         }
-        System.out.println("First move location " + bestDestination);
-        return (new TicketMove(Colour.BLACK, Ticket.fromTransport(transport), bestDestination));
+        System.out.println("First move location " + firstDestination);
+        return (new TicketMove(Colour.BLACK, Ticket.fromTransport(transport), firstDestination));
     }
-
-
-    //FindMax to get best move- move has to be in withing valid moves?
-
-    /*
-    * Double for loop to find each node, dijkstraTable[i][j] = dijkstraCalculate(DGraph graph, i, j)*/
-
-    /*Use gamestate/view to find the mrX location. Write a function to find the best available score based on mrX's location in dijkstraTable and detective locations in Dgraph*/
 }

@@ -2,8 +2,6 @@ package uk.ac.bris.cs.scotlandyard.ui.ai;
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Node;
 import uk.ac.bris.cs.scotlandyard.model.Transport;
-
-import java.util.ArrayList;
 import java.util.*;
 
 public class Dijkstra {
@@ -64,7 +62,9 @@ public class Dijkstra {
             }
         }
         for(int i =1; i<distances.length;i++){
-            distances[i] += temp[i];
+            if(temp[i]>0&&temp[i]<200){
+                distances[i] += temp[i];
+            }
         }
     }
 
