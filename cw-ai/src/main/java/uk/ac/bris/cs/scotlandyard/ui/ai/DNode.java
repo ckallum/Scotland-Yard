@@ -19,11 +19,15 @@ public class DNode {
     }
 
     public void subtractSafety(double danger){
-        this.safety -= danger;
+        if(safety>danger) this.safety -= danger;
     }
 
     public double getFreedom(){
         return freedom;
+    }
+
+    public void setSafety(int safety) {
+        this.safety = safety;
     }
 
     public void setFreedom(double freedom){

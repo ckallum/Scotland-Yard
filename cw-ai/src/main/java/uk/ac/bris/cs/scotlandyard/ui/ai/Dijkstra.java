@@ -36,7 +36,7 @@ public class Dijkstra {
         distances[loc.value()] = 0;
         maxPQ.add(loc.value());
 //        while(visited.size() != graph.getSize())
-        for(int count=0; count<200; count++){
+        while(!maxPQ.isEmpty()){
             Integer temp = maxPQ.peek();
             Node<Integer> currentMax = graph.getGraph().getNode(temp);
             visited.add(currentMax);
@@ -56,7 +56,7 @@ public class Dijkstra {
 
 
     public double getCost(int location){
-        return (distances[location]*(graph.getNode(location).getFreedom())+graph.getNode(location).getSafety());
+        return (distances[location]*(graph.getNode(location).getSafety()))+graph.getNode(location).getFreedom();
     }
 
 
