@@ -24,7 +24,7 @@ public class Score {
     }
 
     private void calculate(){
-        Dijkstra dijkstra = new Dijkstra(new DGraph(this.s), source);
+        Dijkstra dijkstra = new Dijkstra(new DGraph(this.s), this.source);
         for (int j = 0; j<200; j++){
             dijkstra.dijkstra();
             if(source !=j) {

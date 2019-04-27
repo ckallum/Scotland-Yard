@@ -13,7 +13,7 @@ public class DGraph {
     private int size;
     private Graph<Integer,Transport> graph;
     private Set<DNode> nodes = new HashSet<>();
-    private Set<DEdge> edges = new HashSet<>();
+    private Collection<Edge<Integer, Transport>> edges;
     private Set<Integer> detectiveLocations;
     private ArrayList<Integer> visited=new ArrayList<>();
     private ScotlandYardView view;
@@ -23,16 +23,12 @@ public class DGraph {
         this.view = state.getView();
         this.size = state.getGraph().size();
         this.detectiveLocations = findDetectiveLocations();
+        this.edges = graph.getEdges();
 
 
         List<Node<Integer>> allNodes = graph.getNodes();
         for(Node<Integer> node : allNodes){
             this.nodes.add(new DNode(node.value()));
-        }
-        Collection<Edge<Integer,Transport>> allEdges = graph.getEdges();
-        for(Edge<Integer,Transport> edge : allEdges){
-            DEdge temp = new DEdge(edge);
-            edges.add(requireNonNull(temp));
         }
         weightNodeSafety(findDetectiveLocations(),0.9);
         weightNodeFreedom();
@@ -74,9 +70,9 @@ public class DGraph {
     private void weightNodeFreedom(){
         for (DNode node : nodes){
             int count = 0;
-            for (DEdge edge : edges){
-                if(edge.getSource().equals(node)){
-                    if (!detectiveLocations.contains(edge.getDestination().getLocation())) {
+            for (Edge<Integer, Transport> edge : edges){
+                if(edge.source().equals(node)){
+                    if (!detectiveLocations.contains(edge.destination().value())) {
                         count++;
                     }
                 }
@@ -95,12 +91,8 @@ public class DGraph {
         return (detectiveLocations);
     }
 
-    public Set<DEdge> getEdges() {
-        return requireNonNull(edges);
-    }
-
-    public Set<DNode> getNodes() {
-        return requireNonNull(nodes);
+    public Graph<Integer, Transport> getGraph() {
+        return graph;
     }
 
     public DNode getNode(int location){
@@ -116,13 +108,4 @@ public class DGraph {
         return size;
     }
 
-    //
-//    public static void main(String[] args) {
-//
-//        DGraph graph = new DGraph();
-//        ArrayList<DNode> nodes = graph.getNodes();
-//        for(DNode node :nodes){
-//            System.out.print(node.getMultiplier());
-//        }
-//    }
 }
