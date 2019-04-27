@@ -1,6 +1,8 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 import uk.ac.bris.cs.gamekit.graph.Graph;
+import uk.ac.bris.cs.scotlandyard.model.Colour;
 import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
+import uk.ac.bris.cs.scotlandyard.model.Ticket;
 import uk.ac.bris.cs.scotlandyard.model.Transport;
 
 
@@ -11,13 +13,14 @@ import uk.ac.bris.cs.scotlandyard.model.Transport;
 public class State {
     private ScotlandYardView v;
     private int mrxLocation;
+    private int mrXDoubleTickets;
     private Graph<Integer, Transport> graph;
 
     public State(ScotlandYardView view, int location) {
         this.v = view;
         this.mrxLocation = location;
         this.graph = view.getGraph();
-
+        this.mrXDoubleTickets = view.getPlayerTickets(Colour.BLACK, Ticket.DOUBLE).orElse(0);
     }
 
     public ScotlandYardView getView() {
@@ -26,6 +29,10 @@ public class State {
 
     public int getMrxLocation() {
         return mrxLocation;
+    }
+
+    public int getMrXDoubleTickets() {
+        return mrXDoubleTickets;
     }
 
     public Graph<Integer, Transport> getGraph() {

@@ -10,6 +10,7 @@ import java.util.concurrent.BlockingDeque;
 
 public class Score {
     private Graph<Integer, Transport> graph;
+    private DGraph dGraph;
     private State state;
     private int source;
     private final double[] dijkstraGraph = new double[200];/* Stores the maximum distances/weightings from two nodes
@@ -20,6 +21,7 @@ public class Score {
         this.graph = state.getGraph();
         this.source = state.getMrxLocation();
         this.state = state;
+        this.dGraph = new DGraph(state);
         calculate();
     }
 
@@ -34,21 +36,44 @@ public class Score {
         }
     }
 
-    public Move getBestMove(){
-        int bestMove = -1;
-        Transport transport = null;
+    public int getBestDestination(int location){
+        int bestDestination = -1;
         double max = -1;
         for (Edge<Integer, Transport> edge:graph.getEdges()){
-            if(edge.source().value() == source){
+            if(edge.source().value() == location){
                 if(dijkstraGraph[edge.destination().value()] > max){
                     max = dijkstraGraph[edge.destination().value()];
-                    bestMove = edge.destination().value();
-                    transport = edge.data();
+                    bestDestination = edge.destination().value();
                 }
             }
         }
-        System.out.println(bestMove);
-        return (new TicketMove(Colour.BLACK, Ticket.fromTransport(transport), bestMove));
+        return bestDestination;
+    }
+
+    public Move getBestMove(){
+        Transport transport = null;
+        int bestDestination = getBestDestination(this.source);
+        for (Edge<Integer, Transport> edge:graph.getEdges()) {
+            if (edge.source().value()== this.source && edge.destination().value() == bestDestination) {
+                transport = edge.data();
+            }
+        }
+        if(state.getMrXDoubleTickets()>0 && dGraph.getNode(bestDestination).getSafety()<0.45){
+            int secondDestination = getBestDestination(bestDestination);
+            Transport transport2 = null;
+            for (Edge<Integer, Transport> edge:graph.getEdges()) {
+                if (edge.source().value()==bestDestination && edge.destination().value() == secondDestination) {
+                    transport2 = edge.data();
+                }
+            }
+
+            if (dGraph.getNode(secondDestination).getSafety() > dGraph.getNode(bestDestination).getSafety()){
+                System.out.println("Second move location:" + secondDestination);
+                return (new DoubleMove(Colour.BLACK, Ticket.fromTransport(transport), bestDestination, Ticket.fromTransport(transport2), secondDestination));
+            }
+        }
+        System.out.println("First move location " + bestDestination);
+        return (new TicketMove(Colour.BLACK, Ticket.fromTransport(transport), bestDestination));
     }
 
 
