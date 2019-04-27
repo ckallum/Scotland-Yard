@@ -30,7 +30,7 @@ public class DGraph {
         for(Node<Integer> node : allNodes){
             this.nodes.add(new DNode(node.value()));
         }
-        weightNodeSafety(findDetectiveLocations(),0.9);
+        weightNodeSafety(findDetectiveLocations(),0.95);
         weightNodeFreedom();
     }
 
@@ -52,8 +52,8 @@ public class DGraph {
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            if(danger>0.35) {
-                weightNodeSafety(neighbourNodes, danger - 0.15);
+            if(danger>0.55) {
+                weightNodeSafety(neighbourNodes, danger - 0.2);
             }
         }
     }

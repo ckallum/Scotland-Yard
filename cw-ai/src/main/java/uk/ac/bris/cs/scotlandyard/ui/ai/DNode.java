@@ -27,7 +27,7 @@ public class DNode {
     }
 
     public void setFreedom(int freedom){
-        this.freedom = freedom*0.05;
+        this.freedom = freedom*0.01;
     }
 
 }

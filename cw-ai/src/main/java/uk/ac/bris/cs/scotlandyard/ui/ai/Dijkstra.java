@@ -29,7 +29,7 @@ public class Dijkstra {
             neighbourNodes.add(edge.destination());
         }
 
-        for(int i =0; i<distances.length; i++){
+        for(int i =1; i<distances.length; i++){
             distances[i] = 0;
         }
 
