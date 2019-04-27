@@ -8,7 +8,6 @@ import uk.ac.bris.cs.scotlandyard.model.*;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.BlockingDeque;
 
 public class Score {
     private Graph<Integer, Transport> graph;
@@ -16,7 +15,7 @@ public class Score {
     private State state;
     private int source;
     private Set<Integer> detectiveLocations = new HashSet<>();
-    private final double[] dijkstraGraph = new double[200];/* Stores the maximum distances/weightings from two nodes
+    private final double[] dijkstraTable = new double[200];/* Stores the maximum distances/weightings from two nodes
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
     //ValidMoves?
@@ -34,9 +33,9 @@ public class Score {
         dijkstra.dijkstra();
         for (int j = 1; j<200; j++){
             if(source !=j) {
-                dijkstraGraph[j] = dijkstra.getCost(j);
+                dijkstraTable[j] = dijkstra.getCost(j);
             }
-            else dijkstraGraph[j] = 0;
+            else dijkstraTable[j] = 0;
         }
     }
 
@@ -45,9 +44,11 @@ public class Score {
         double max = -1;
         for (Edge<Integer, Transport> edge:graph.getEdges()){
             if(edge.source().value() == location){
-                System.out.println(dijkstraGraph[edge.destination().value()]);
-                if(!detectiveLocations.contains(edge.destination().value()) && dijkstraGraph[edge.destination().value()] > max){
-                    max = dijkstraGraph[edge.destination().value()];
+                System.out.println(dijkstraTable[edge.destination().value()]);
+                System.out.println("SafetyALL: "+dGraph.getNode(location).getSafety());
+
+                if(!detectiveLocations.contains(edge.destination().value()) && dijkstraTable[edge.destination().value()] > max){
+                    max = dijkstraTable[edge.destination().value()];
                     bestDestination = edge.destination().value();
                 }
             }
@@ -87,7 +88,7 @@ public class Score {
     //FindMax to get best move- move has to be in withing valid moves?
 
     /*
-    * Double for loop to find each node, dijkstraGraph[i][j] = dijkstraCalculate(DGraph graph, i, j)*/
+    * Double for loop to find each node, dijkstraTable[i][j] = dijkstraCalculate(DGraph graph, i, j)*/
 
-    /*Use gamestate/view to find the mrX location. Write a function to find the best available score based on mrX's location in dijkstraGraph and detective locations in Dgraph*/
+    /*Use gamestate/view to find the mrX location. Write a function to find the best available score based on mrX's location in dijkstraTable and detective locations in Dgraph*/
 }
