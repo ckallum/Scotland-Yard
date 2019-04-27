@@ -30,7 +30,7 @@ public class Score {
 
     private void calculate(){
         Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
-        dijkstra.dijkstra();
+        dijkstra.calculateDistances();
         for (int j = 1; j<200; j++){
             if(source !=j) {
                 dijkstraTable[j] = dijkstra.getCost(j);
@@ -42,19 +42,19 @@ public class Score {
     public int getBestDestination(int location){
         int bestDestination = -1;
         double max = -1;
-        for (Edge<Integer, Transport> edge:graph.getEdges()){
-            if(edge.source().value() == location){
-                System.out.println(dijkstraTable[edge.destination().value()]);
-                System.out.println("SafetyALL: "+dGraph.getNode(location).getSafety());
+        int count = 0;
+        for (Edge<Integer, Transport> edge:graph.getEdgesFrom(graph.getNode(location))){
+                count++;
+                System.out.println("Value:" + dijkstraTable[edge.destination().value()]);
+                System.out.println("Safety: "+count+" "+dGraph.getNode(location).getSafety());
 
                 if(!detectiveLocations.contains(edge.destination().value()) && dijkstraTable[edge.destination().value()] > max){
                     max = dijkstraTable[edge.destination().value()];
                     bestDestination = edge.destination().value();
                 }
             }
-        }
         System.out.println("Max: " + max);
-        System.out.println("Safety: " + dGraph.getNode(bestDestination).getSafety());
+        System.out.println("Final Safety: " + dGraph.getNode(bestDestination).getSafety());
         return bestDestination;
     }
 
