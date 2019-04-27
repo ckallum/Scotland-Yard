@@ -1,5 +1,7 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
+import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
+import uk.ac.bris.cs.scotlandyard.model.Transport;
 
 
 /*Class to implement the current State of the game and changes to the player and game view
@@ -7,26 +9,26 @@ import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
     - Will update these values when a move is made. Eg change gamestate when a move is made ->call move.visit, willl call local visit functions from MoveVisitor implementation
 *   - Possibly implement MoveVisitor to update MrXLocation.*/
 public class State {
-    private ScotlandYardView view;
+    private ScotlandYardView v;
     private Integer mrxLocation;
-    private DGraph graph;
+    private Graph<Integer, Transport> graph;
 
     public State(ScotlandYardView view, int location) {
-        this.view = view;
+        this.v = view;
         this.mrxLocation = location;
-        this.graph = new DGraph(this);
+        this.graph = view.getGraph();
 
     }
 
     public ScotlandYardView getView() {
-        return view;
+        return v;
     }
 
     public Integer getMrxLocation() {
         return mrxLocation;
     }
 
-    public DGraph getGraph() {
+    public Graph<Integer, Transport> getGraph() {
         return graph;
     }
 }

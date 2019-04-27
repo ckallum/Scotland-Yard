@@ -2,44 +2,46 @@ package uk.ac.bris.cs.scotlandyard.ui.ai;
 
 //NEED TO DO SOMETHING ON DOUBLE MOVE
 
+import uk.ac.bris.cs.gamekit.graph.Edge;
+import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.scotlandyard.model.*;
 
 import java.util.concurrent.BlockingDeque;
 
 public class Score {
-    private DGraph graph;
+    private Graph<Integer, Transport> graph;
+    private State s;
     private Integer source;
-    private final double[][] dijkstraGraph = new double[200][200];/* Stores the maximum distances/weightings from two nodes
+    private final double[] dijkstraGraph = new double[200];/* Stores the maximum distances/weightings from two nodes
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
     //ValidMoves?
     public Score(State state) { //Use state as input?
         this.graph = state.getGraph();
         this.source = state.getMrxLocation();
+        this.s = state;
         calculate();
     }
 
     private void calculate(){
-        for (int i = 0; i<200; i++){
-            Dijkstra dijkstra = new Dijkstra(this.graph, i);
-            for (int j = 0; j<200; j++){
-                dijkstra.dijkstra();
-                if(i!=j){
-                    dijkstraGraph[i][j] = dijkstra.getCost(graph.getNode(j));
-                }
-                else dijkstraGraph[i][j] = 0;
+        Dijkstra dijkstra = new Dijkstra(new DGraph(this.s), source);
+        for (int j = 0; j<200; j++){
+            dijkstra.dijkstra();
+            if(source !=j) {
+                dijkstraGraph[j] = dijkstra.getCost(j);
             }
+            else dijkstraGraph[j] = 0;
         }
     }
 
     private Integer getBestDestination(){
         Integer bestMove = Integer.MIN_VALUE;
         double max = 0;
-        for (DEdge edge:graph.getEdges()){
-            if(edge.getSource().getLocation().equals(source)){
-                if(dijkstraGraph[source][edge.getDestination().getLocation()] > max){
-                    max = dijkstraGraph[source][edge.getDestination().getLocation()];
-                    bestMove = edge.getSource().getLocation();
+        for (Edge<Integer, Transport> edge:graph.getEdges()){
+            if(edge.source().value().equals(source)){
+                if(dijkstraGraph[edge.destination().value()] > max){
+                    max = dijkstraGraph[edge.destination().value()];
+                    bestMove = edge.destination().value();
                 }
             }
         }
@@ -49,8 +51,8 @@ public class Score {
 
     public Move getMove(){
         //if node score is at certain limit create double mnove instead.
-        for(DEdge edge:graph.getEdges()){
-            if(edge.getSource().getLocation().equals(source) && edge.getDestination().getLocation().equals(getBestDestination())){
+        for(Edge<Integer, Transport> edge:graph.getEdges()){
+            if(edge.source().value().equals(source) && edge.destination().value().equals(getBestDestination())){
 //                if() {
 //                    return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
 //                }
@@ -60,7 +62,7 @@ public class Score {
 //                    //Work on this.
 //                    return (new DoubleMove())
 //                }
-                return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.getTransport()), getBestDestination()));
+                return (new TicketMove(Colour.BLACK, Ticket.fromTransport(edge.data()), getBestDestination()));
             }
         }
         return null;

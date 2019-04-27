@@ -12,23 +12,22 @@ import static java.util.Objects.requireNonNull;
 public class DGraph {
     private int size;
     private Graph<Integer,Transport> graph;
-    private Set<DNode> nodes = new HashSet<>(size+1);
+    private Set<DNode> nodes = new HashSet<>();
     private Set<DEdge> edges = new HashSet<>();
     private Set<Integer> detectiveLocations;
-    private ArrayList<Integer> visited=new ArrayList<>(size+1);
+    private ArrayList<Integer> visited=new ArrayList<>();
     private ScotlandYardView view;
-    private Set<DNode> ns = new HashSet<>(size+1);
 
     public DGraph(State state) {
-        this.graph = state.getView().getGraph();
+        this.graph = state.getGraph();
         this.view = state.getView();
-        this.size = graph.size();
+        this.size = state.getGraph().size();
         this.detectiveLocations = findDetectiveLocations();
 
 
         List<Node<Integer>> allNodes = graph.getNodes();
         for(Node<Integer> node : allNodes){
-            this.nodes.add(new DNode(requireNonNull(node.value())));
+            this.nodes.add(new DNode(node.value()));
         }
         Collection<Edge<Integer,Transport>> allEdges = graph.getEdges();
         for(Edge<Integer,Transport> edge : allEdges){
@@ -105,8 +104,8 @@ public class DGraph {
     }
 
     public DNode getNode(int location){
-        for(DNode node : nodes){
-            if (node.getLocation().equals(location)){
+        for(DNode node : this.nodes){
+            if (node.getLocation()==location){
                 return node;
             }
         }

@@ -4,23 +4,25 @@ import java.util.*;
 
 public class Dijkstra {
         private DGraph graph;
-        private DNode source; // i in distances[i][j]
+        private Integer source; // i in distances[i][j]
         private int[]distances;
         private Set<DNode> visited = new HashSet<>();
-        private PriorityQueue<DNode> maxPQ;
+        private PriorityQueue<Integer> maxPQ;
 
 
-    public Dijkstra(DGraph graph, int source) {
-        this.graph = graph;
-        this.source = graph.getNode(source);
+    public Dijkstra(DGraph Dgraph, Integer source) {
+        this.graph = Dgraph;
+        this.source = source;
         this.distances = new int[graph.getSize()];
+        this.maxPQ = new PriorityQueue<>(graph.getSize());
 
     }
 
     public void dijkstra(){ //Creates a Map For Costs between Nodes Relative to the Source
         List<DNode> neighbourNodes = new ArrayList<>();
+        DNode s = graph.getNode(source);
         for(DEdge edge : graph.getEdges()){
-            if(edge.getSource().equals(source)){
+            if(edge.getSource().getLocation().equals(source)){
                 neighbourNodes.add(edge.getDestination());
             }
         }
@@ -28,10 +30,13 @@ public class Dijkstra {
         for(int i =0; i<graph.getSize(); i++){
             distances[i] = Integer.MIN_VALUE;
         }
-        distances[source.getLocation()] = 0;
-        maxPQ.add(source);
+
+        if(s == null) throw new IllegalArgumentException("uh");
+        distances[s.getLocation()] = 0;
+        maxPQ.add(s.getLocation());
         while(visited.size() != graph.getSize()){
-            DNode currentMax = maxPQ.remove();
+            Integer temp = maxPQ.remove();
+            DNode currentMax = graph.getNode(temp);
             visited.add(currentMax);
             for(int i = 0; i<neighbourNodes.size(); i++){
                 DNode neighbour = neighbourNodes.get(i);
@@ -40,14 +45,14 @@ public class Dijkstra {
                     if(distance > distances[neighbour.getLocation()]){
                         distances[neighbour.getLocation()] = distance;
                     }
-                    maxPQ.add(neighbour);
+                    maxPQ.add(neighbour.getLocation());
                 }
             }
         }
     }
 
-    public double getCost(DNode destination){
-        return (distances[destination.getLocation()]*(destination.getFreedom()+destination.getSafety()));
+    public double getCost(Integer location){
+        return (distances[location]*(graph.getNode(location).getSafety()+graph.getNode(location).getFreedom()));
     }
 
 
