@@ -6,6 +6,8 @@ import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.scotlandyard.model.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 
 public class Score {
@@ -13,6 +15,7 @@ public class Score {
     private DGraph dGraph;
     private State state;
     private int source;
+    private Set<Integer> detectiveLocations = new HashSet<>();
     private final double[] dijkstraGraph = new double[200];/* Stores the maximum distances/weightings from two nodes
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
@@ -22,6 +25,7 @@ public class Score {
         this.source = state.getMrxLocation();
         this.state = state;
         this.dGraph = new DGraph(state);
+        this.detectiveLocations = dGraph.findDetectiveLocations();
         calculate();
     }
 
@@ -41,12 +45,15 @@ public class Score {
         double max = -1;
         for (Edge<Integer, Transport> edge:graph.getEdges()){
             if(edge.source().value() == location){
-                if(dijkstraGraph[edge.destination().value()] > max){
+                System.out.println(dijkstraGraph[edge.destination().value()]);
+                if(!detectiveLocations.contains(edge.destination().value()) && dijkstraGraph[edge.destination().value()] > max){
                     max = dijkstraGraph[edge.destination().value()];
                     bestDestination = edge.destination().value();
                 }
             }
         }
+        System.out.println("Max: " + max);
+        System.out.println("Safety: " + dGraph.getNode(bestDestination).getSafety());
         return bestDestination;
     }
 

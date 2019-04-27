@@ -30,17 +30,17 @@ public class DGraph {
         for(Node<Integer> node : allNodes){
             this.nodes.add(new DNode(node.value()));
         }
-        weightNodeSafety(findDetectiveLocations(),0.95);
+        weightNodeSafety(findDetectiveLocations(),95);
         weightNodeFreedom();
     }
 
-    private void weightNodeSafety(Set<Integer> n, double danger){
+    private void weightNodeSafety(Set<Integer> ns, double danger){
         //Higher the danger the more dangerous the node is
-        for(Integer location:n){
+        for(Integer location:ns){
             if(!detectiveLocations.contains(location)){
                 if(this.visited.contains(location)){
-                    if(danger >=0.55) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
-                        subtractSafety(location, danger + 0.1);
+                    if(danger >=55) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
+                        subtractSafety(location, danger + 10);
                     }
                 }
                  else {
@@ -53,7 +53,7 @@ public class DGraph {
                 neighbourNodes.add(edge.destination().value());
             }
             if(danger>=0.35) {
-                weightNodeSafety(neighbourNodes, danger - 0.2);
+                weightNodeSafety(neighbourNodes, danger - 20);
             }
         }
     }
@@ -73,7 +73,7 @@ public class DGraph {
             for (Edge<Integer, Transport> edge : edges){
                 if(edge.source().value().equals(node.getLocation())){
                     if (!detectiveLocations.contains(edge.destination().value())) {
-                        count++;
+                        count += node.getSafety();
                     }
                 }
                 node.setFreedom(count);
@@ -81,7 +81,7 @@ public class DGraph {
         }
     }
 
-    private Set<Integer> findDetectiveLocations() {
+    public Set<Integer> findDetectiveLocations() {
         Set<Integer> detectiveLocations = new HashSet<>();
         for(Colour colour: view.getPlayers()){
             if(colour!=Colour.BLACK){

@@ -10,7 +10,7 @@ import uk.ac.bris.cs.scotlandyard.ai.Visualiser;
 import uk.ac.bris.cs.scotlandyard.model.*;
 
 // TODO name the AI
-@ManagedAI("AI")
+@ManagedAI("MrX")
 public class MyAI implements PlayerFactory {
 
 	// TODO create a new player here
