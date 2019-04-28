@@ -56,7 +56,7 @@ public class DGraph {
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            if(danger>=35) {
+            if(danger>55){
                 weightNodeSafety(neighbourNodes, (danger-10));
             }
         }

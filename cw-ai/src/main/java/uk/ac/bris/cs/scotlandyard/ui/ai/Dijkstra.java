@@ -4,9 +4,9 @@ import uk.ac.bris.cs.gamekit.graph.Node;
 import java.util.*;
 
 public class Dijkstra {
-        private DGraph graph;
-        private Map<Integer,Integer> distances = new HashMap<>();
-        private int source;
+    private DGraph graph;
+    private Map<Integer,Integer> distances = new HashMap<>();
+    private int source;
 
 
     public Dijkstra(DGraph dGraph, int source) {
@@ -18,7 +18,6 @@ public class Dijkstra {
     public void calculateDistances(){
         Set<Integer> detectiveLocations = graph.findDetectiveLocations();
         Set<Node<Integer>> neighbours = graph.getNode(source).findNeighbours(graph, graph.getGraph().getNode(source));
-        if(neighbours==null)throw new IllegalArgumentException("??");
         for(Node<Integer> neighbour:neighbours){
             distances.put(neighbour.value(),0);
             for(int detectiveLocation : detectiveLocations){
@@ -43,15 +42,13 @@ public class Dijkstra {
 
         while(currentMin.value()!=destination){
             int minLocation = findMin(temp, minPQ);
-            if(minLocation==-1)throw new IllegalArgumentException("-1 is not valid");
             currentMin = graph.getGraph().getNode(minLocation);
             visited.add(currentMin);
             minPQ.remove(currentMin);
             Set<Node<Integer>>neighbours = graph.getNode(minLocation).findNeighbours(graph,graph.getGraph().getNode(minLocation));
-            if(neighbours==null)throw new IllegalArgumentException("??");
             for(Node<Integer> neighbour : neighbours){
                 if(!visited.contains(neighbour)){
-                    int distance = temp.get(minLocation);
+                    int distance = temp.get(minLocation)+1;
                     if(distance < temp.get(neighbour.value())){
                         temp.put(neighbour.value(), distance);
                     }
@@ -76,7 +73,7 @@ public class Dijkstra {
 
 
     public double getCost(int location){
-        return (distances.get(location)*(graph.getNode(location).getSafety()-graph.getNode(location).getFreedom()));
+        return (distances.get(location)-graph.getNode(location).getFreedom())*(graph.getNode(location).getSafety());
     }
 
 

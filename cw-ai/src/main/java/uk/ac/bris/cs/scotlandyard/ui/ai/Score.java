@@ -34,9 +34,9 @@ public class Score {
         Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
         dijkstra.calculateDistances();
         Set<Node<Integer>> neighbours = dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(source));
-        if (neighbours == null) throw new IllegalArgumentException("neighbours are null");
         for (Node<Integer> neighbour : neighbours) {
             dijkstraTable[neighbour.value()] = dijkstra.getCost(neighbour.value());
+            System.out.println("Score: "+dijkstraTable[neighbour.value()]);
         }
     }
 
