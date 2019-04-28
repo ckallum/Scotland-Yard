@@ -10,7 +10,6 @@ import java.util.*;
 import static java.util.Objects.requireNonNull;
 
 public class DGraph {
-    private int size;
     private Graph<Integer,Transport> graph;
     private List<DNode> nodes = new ArrayList<>();
     private Collection<Edge<Integer, Transport>> edges;
@@ -21,7 +20,6 @@ public class DGraph {
     public DGraph(State state) {
         this.graph = state.getGraph();
         this.view = state.getView();
-        this.size = state.getGraph().size();
         this.detectiveLocations = findDetectiveLocations();
         this.edges = graph.getEdges();
 
@@ -44,7 +42,7 @@ public class DGraph {
         for(Integer location:ns) {
             if (!detectiveLocations.contains(location)) {
                 if (this.visited.contains(location)) {
-                    if (danger >= 55) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
+                    if (danger >65) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
                         subtractSafety(location, danger + 5);
                     }
                 }
@@ -58,7 +56,7 @@ public class DGraph {
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            if(danger>=35) {
+            if(danger>=55) {
                 weightNodeSafety(neighbourNodes, (danger-10));
             }
         }
@@ -78,12 +76,12 @@ public class DGraph {
             int count = 0;
             for (Edge<Integer, Transport> edge : edges){
                 if(edge.source().value().equals(node.getLocation())){
-                    if (!detectiveLocations.contains(edge.destination().value())) {
+                    if (detectiveLocations.contains(edge.destination().value())) {
                         count ++;
                     }
                 }
-                node.setFreedom(count);
             }
+            node.setFreedom(count);
         }
     }
 
@@ -108,10 +106,6 @@ public class DGraph {
             }
         }
         return null;
-    }
-
-    public int getSize() {
-        return size;
     }
 
 }

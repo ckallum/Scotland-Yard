@@ -1,12 +1,10 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 import uk.ac.bris.cs.gamekit.graph.Graph;
-import uk.ac.bris.cs.scotlandyard.model.Colour;
-import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
-import uk.ac.bris.cs.scotlandyard.model.Ticket;
-import uk.ac.bris.cs.scotlandyard.model.Transport;
+import uk.ac.bris.cs.scotlandyard.model.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.BlockingDeque;
 
 
@@ -19,11 +17,13 @@ public class State {
     private int mrxLocation;
     private Map<Ticket, Integer> MrXTickets = new HashMap<>();
     private Graph<Integer, Transport> graph;
+    private Set<Move> validMoves;
 
-    public State(ScotlandYardView view, int location) {
+    public State(ScotlandYardView view, int location, Set<Move> moves) {
         this.v = view;
         this.mrxLocation = location;
         this.graph = view.getGraph();
+        this.validMoves = moves;
         findMrXTickets();
     }
 
@@ -47,5 +47,9 @@ public class State {
         for(Ticket ticket : Ticket.values()){
             this.MrXTickets.put(ticket, v.getPlayerTickets(Colour.BLACK, ticket).orElse(0));
         }
+    }
+
+    public Set<Move> getValidMoves() {
+        return validMoves;
     }
 }

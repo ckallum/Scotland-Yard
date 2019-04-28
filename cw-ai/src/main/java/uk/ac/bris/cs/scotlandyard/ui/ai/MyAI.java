@@ -21,6 +21,7 @@ public class MyAI implements PlayerFactory {
 
 	// TODO A sample player that selects a random move
 	private static class MyPlayer implements Player {
+		Random random = new Random();
 
 		/*Idea is to weight each edge based on method of transportation, where taxi has least value(1),
 		* bus has second most value(5) and train has most value (10). Then we can add a multiplier of that
@@ -31,11 +32,12 @@ public class MyAI implements PlayerFactory {
 				Consumer<Move> callback) {
 			// TODO do something interesting here; find the best move
 
-			State state = new State(view, location);
+			State state = new State(view, location, moves);
 			Score score = new Score(state);
 			Move bestMove = score.getBestMove();
 			if (bestMove == null){
-				throw new IllegalArgumentException("Something went Wrong");
+				System.out.println("Null");
+				bestMove = new ArrayList<>(moves).get(random.nextInt(moves.size()));
 			}
 			callback.accept(bestMove);
 		}

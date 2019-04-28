@@ -11,7 +11,7 @@ import java.util.Set;
 public class DNode {
     private int location;
     private int safety;
-    private double freedom;
+    private int freedom;
     //Freedom of movement -- implement this in DGraph
 
     public DNode(Integer location) {
@@ -43,7 +43,7 @@ public class DNode {
         if(safety>danger) this.safety -= danger;
     }
 
-    public double getFreedom(){
+    public int getFreedom(){
         return freedom;
     }
 
@@ -51,7 +51,7 @@ public class DNode {
         this.safety = safety;
     }
 
-    public void setFreedom(double freedom){
+    public void setFreedom(int freedom){
         this.freedom = freedom;
     }
 
