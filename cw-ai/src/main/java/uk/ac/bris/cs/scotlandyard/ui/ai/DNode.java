@@ -23,10 +23,8 @@ public class DNode {
         Set<Node<Integer>> neighbours = new HashSet<>();
         Collection<Edge<Integer, Transport>> connections = graph.getGraph().getEdgesFrom(location);
         for(Edge<Integer,Transport> connection : connections){
-            if(!graph.findDetectiveLocations().contains(connection.destination().value())){
-                if(graph.getNode(connection.destination().value())==null)throw new IllegalArgumentException("dGraph!=graph?");
-                neighbours.add(connection.destination());
-            }
+            if(graph.getNode(connection.destination().value())==null)throw new IllegalArgumentException("dGraph!=graph?");
+            neighbours.add(connection.destination());
         }
         return neighbours;
     }
