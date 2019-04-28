@@ -76,7 +76,7 @@ public class Dijkstra {
 
 
     public double getCost(int location){
-        return (distances.get(location)*(graph.getNode(location).getSafety() - graph.getNode(location).getFreedom()));
+        return (distances.get(location)*(graph.getNode(location).getSafety()-graph.getNode(location).getFreedom()));
     }
 
 
