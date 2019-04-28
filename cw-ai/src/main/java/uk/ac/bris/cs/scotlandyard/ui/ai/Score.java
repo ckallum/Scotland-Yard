@@ -56,41 +56,40 @@ public class Score {
 
     public Move getBestMove() {
         Ticket ticket1 = null;
-        Move move1;
+        Move move1 = null;
         int firstDestination = getBestDestination(this.source);
         for (Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(source))) {
             if (edge.destination().value() == firstDestination && (state.getMrXTickets().get(Ticket.fromTransport(edge.data())) > 0)) {
                 if (toSecret(firstDestination)) {
                     ticket1 = Ticket.SECRET;
-                }
-                else {
+                } else {
                     ticket1 = Ticket.fromTransport(edge.data());
                 }
+                move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
             }
-
-                if (dGraph.getNode(firstDestination).getSafety() <= 65 && state.getMrXTickets().get(Ticket.DOUBLE) > 0) {
-                    Ticket ticket2=null;
-                    Move move2;
-                    int secondDestination = getBestDestination(firstDestination);
-                    if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {
-                        for (Edge<Integer, Transport> edge2 : graph.getEdgesFrom(graph.getNode(firstDestination))) {
-                            if ((edge2.destination().value() == secondDestination) && (state.getMrXTickets().get(Ticket.fromTransport(edge2.data())) > 0)) {
-                                if (toSecret(secondDestination)) {
-                                    ticket2 = Ticket.SECRET;
-                                }
-                                else {
-                                    ticket2 = Ticket.fromTransport(edge2.data());
-                                }
+        }
+        if (dGraph.getNode(source).getSafety() <= 45 && dGraph.getNode(source).getFreedom()>1 ){
+            if (state.getMrXTickets().get(Ticket.DOUBLE) > 0) {
+                Ticket ticket2;
+                Move move2 = null;
+                int secondDestination = getBestDestination(firstDestination);
+                if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {
+                    for (Edge<Integer, Transport> edge2 : graph.getEdgesFrom(graph.getNode(firstDestination))) {
+                        if ((edge2.destination().value() == secondDestination) && (state.getMrXTickets().get(Ticket.fromTransport(edge2.data())) > 0)) {
+                            if (toSecret(secondDestination)) {
+                                ticket2 = Ticket.SECRET;
+                            } else {
+                                ticket2 = Ticket.fromTransport(edge2.data());
                             }
+                            move2 = new DoubleMove(Colour.BLACK, ticket1, firstDestination, ticket2, secondDestination);
                         }
-                        move2 = new DoubleMove(Colour.BLACK, ticket1, firstDestination, ticket2, secondDestination);
-                        if (state.getValidMoves().contains(move2)) {
-                            return (move2);
-                        }
+                    }
+                    if (state.getValidMoves().contains(move2)) {
+                        return (move2);
                     }
                 }
             }
-        move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
+        }
         if(state.getValidMoves().contains(move1)) {
             return move1;
         }
