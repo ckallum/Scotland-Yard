@@ -34,9 +34,11 @@ public class Score {
         Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
         dijkstra.calculateDistances();
         Set<Node<Integer>> neighbours = dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(source));
+        System.out.println("Neighbours size: "+ neighbours.size());
         for (Node<Integer> neighbour : neighbours) {
             dijkstraTable[neighbour.value()] = dijkstra.getCost(neighbour.value());
-            System.out.println("Score: "+dijkstraTable[neighbour.value()]);
+            System.out.println(neighbour.value());
+            System.out.println("Score1: "+dijkstraTable[neighbour.value()]);
         }
     }
 
@@ -44,7 +46,7 @@ public class Score {
         int bestDestination = -1;
         double max = -1;
         for (Node<Integer> neighbour : dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(location))) {
-            if (!detectiveLocations.contains(neighbour.value()) && dijkstraTable[neighbour.value()] > max) {
+            if (dijkstraTable[neighbour.value()] > max) {
                 max = dijkstraTable[neighbour.value()];
                 bestDestination = neighbour.value();
             }
