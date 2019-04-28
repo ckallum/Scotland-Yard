@@ -50,13 +50,12 @@ public class DGraph {
                     subtractSafety(location, danger);
                 }
             }
-
             Collection<Edge<Integer,Transport>> connectingEdges = graph.getEdgesFrom(graph.getNode(location));
             Set<Integer>neighbourNodes = new HashSet<>();
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            if(danger>=35){
+            if(danger>=45){
                 weightNodeSafety(neighbourNodes, (danger-10));
             }
         }
