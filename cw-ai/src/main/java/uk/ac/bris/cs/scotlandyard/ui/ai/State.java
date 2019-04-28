@@ -5,6 +5,10 @@ import uk.ac.bris.cs.scotlandyard.model.ScotlandYardView;
 import uk.ac.bris.cs.scotlandyard.model.Ticket;
 import uk.ac.bris.cs.scotlandyard.model.Transport;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.BlockingDeque;
+
 
 /*Class to implement the current State of the game and changes to the player and game view
     - Will Store current mrXLocation and DetectiveLocations and current graph?
@@ -13,14 +17,14 @@ import uk.ac.bris.cs.scotlandyard.model.Transport;
 public class State {
     private ScotlandYardView v;
     private int mrxLocation;
-    private int mrXDoubleTickets;
+    private Map<Ticket, Integer> MrXTickets = new HashMap<>();
     private Graph<Integer, Transport> graph;
 
     public State(ScotlandYardView view, int location) {
         this.v = view;
         this.mrxLocation = location;
         this.graph = view.getGraph();
-        this.mrXDoubleTickets = view.getPlayerTickets(Colour.BLACK, Ticket.DOUBLE).orElse(0);
+        findMrXTickets();
     }
 
     public ScotlandYardView getView() {
@@ -31,11 +35,17 @@ public class State {
         return mrxLocation;
     }
 
-    public int getMrXDoubleTickets() {
-        return mrXDoubleTickets;
+    public Map<Ticket, Integer> getMrXTickets(){
+        return this.MrXTickets;
     }
 
     public Graph<Integer, Transport> getGraph() {
         return graph;
+    }
+
+    private void findMrXTickets(){
+        for(Ticket ticket : Ticket.values()){
+            this.MrXTickets.put(ticket, v.getPlayerTickets(Colour.BLACK, ticket).orElse(0));
+        }
     }
 }

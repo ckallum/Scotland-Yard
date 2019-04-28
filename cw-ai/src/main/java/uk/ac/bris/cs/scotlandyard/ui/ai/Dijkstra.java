@@ -1,34 +1,30 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
-import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Node;
-import uk.ac.bris.cs.scotlandyard.model.Transport;
+
 import java.util.*;
 
 public class Dijkstra {
         private DGraph graph;
-        private int[]distances;
+        private Map<Integer,Integer> distances = new HashMap<>();
         private int source;
 
 
-    public Dijkstra(DGraph Dgraph, int source) {
-        this.graph = Dgraph;
-        this.distances = new int[graph.getSize()+1];
+    public Dijkstra(DGraph dGraph, int source) {
+        this.graph = dGraph;
         this.source = source;
 
     }
 
     public void calculateDistances(){
         Set<Integer> detectiveLocations = graph.findDetectiveLocations();
-        Set<Node<Integer>> neighbours = getNeighbours(graph.getGraph().getNode(source));
-
+        Set<Node<Integer>> neighbours = graph.getNode(source).findNeighbours(graph, graph.getGraph().getNode(source));
+        if(neighbours==null)throw new IllegalArgumentException("??");
         for(Node<Integer> neighbour:neighbours){
+            distances.put(neighbour.value(),0);
             for(int detectiveLocation : detectiveLocations){
                 dijkstra(detectiveLocation, neighbour.value());
             }
-        }
-        for(int i = 1; i<distances.length; i++){
-            distances[i] = distances[i]/(graph.findDetectiveLocations().size());
-            System.out.println("Distance:" + i + " " + distances[i]);
+            distances.put(neighbour.value(), distances.get(neighbour.value())/detectiveLocations.size());
         }
     }
 
@@ -37,65 +33,50 @@ public class Dijkstra {
         //Creates a Map For Costs between Nodes Relative to the Source
         Set<Node<Integer>> visited = new HashSet<>();
         Set<Node<Integer>> minPQ = new HashSet<>();
-        int[]temp = new int[distances.length];
-        for(int i =1; i<distances.length; i++){
-            temp[i] = Integer.MAX_VALUE;
+        Map<Integer, Integer> temp = new HashMap<>();
+        for(int i =1; i<graph.getGraph().size()+1; i++){
+            temp.put(i, Integer.MAX_VALUE);
         }
         Node<Integer> currentMin = graph.getGraph().getNode(source);
-        temp[currentMin.value()] = 0;
+        temp.put(currentMin.value(), 0);
         minPQ.add(currentMin);
 
         while(currentMin.value()!=destination){
-            Integer minLocation = findMin(minPQ);
+            int minLocation = findMin(temp, minPQ);
+            if(minLocation==-1)throw new IllegalArgumentException("-1 is not valid");
             currentMin = graph.getGraph().getNode(minLocation);
             visited.add(currentMin);
             minPQ.remove(currentMin);
-            Set<Node<Integer>>neighbours = getNeighbours(currentMin);
+            Set<Node<Integer>>neighbours = graph.getNode(minLocation).findNeighbours(graph,graph.getGraph().getNode(minLocation));
+            if(neighbours==null)throw new IllegalArgumentException("??");
             for(Node<Integer> neighbour : neighbours){
                 if(!visited.contains(neighbour)){
-                    int distance = temp[minLocation]+1;
-                    if(distance < temp[neighbour.value()]){
-                        temp[neighbour.value()] = distance;
+                    int distance = temp.get(minLocation);
+                    if(distance < temp.get(neighbour.value())){
+                        temp.put(neighbour.value(), distance);
                     }
                     minPQ.add(neighbour);
                 }
             }
         }
-        for(int i =1; i<distances.length;i++){
-            if(temp[i]>0&&temp[i]<200){
-                distances[i] += temp[i];
-            }
-        }
+        distances.put(destination, distances.get(destination)+temp.get(destination));
     }
 
-    private  int findMin(Set<Node<Integer>> minPQ) {
+    private int findMin(Map<Integer, Integer> temp, Set <Node<Integer>> minPQ) {
         int current = Integer.MAX_VALUE;
         int node = -1;
-
-        for (int n = 1; n<distances.length; n++) {
-
-            if ((distances[n] < current) && minPQ.contains(graph.getGraph().getNode(n))){
-                current = distances[n];
+        for (int n = 1; n<temp.size()+1; n++) {
+            if ((temp.get(n) < current) && minPQ.contains(graph.getGraph().getNode(n))){
+                current = temp.get(n);
                 node = n;
             }
         }
         return node;
     }
 
-    private Set<Node<Integer>> getNeighbours(Node<Integer> location){
-        Set<Node<Integer>> neighbours = new HashSet<>();
-        Collection<Edge<Integer,Transport>> connections = graph.getGraph().getEdgesFrom(location);
-        for(Edge<Integer,Transport> connection : connections){
-            if(!graph.findDetectiveLocations().contains(connection.destination().value())){
-                neighbours.add(connection.destination());
-            }
-        }
-        return neighbours;
-    }
-
 
     public double getCost(int location){
-        return (distances[location]*(graph.getNode(location).getSafety()))+graph.getNode(location).getFreedom();
+        return (distances.get(location)+(graph.getNode(location).getFreedom()*0.1))*(graph.getNode(location).getSafety());
     }
 
 

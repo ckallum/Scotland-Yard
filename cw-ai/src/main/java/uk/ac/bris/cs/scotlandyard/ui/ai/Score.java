@@ -4,6 +4,7 @@ package uk.ac.bris.cs.scotlandyard.ui.ai;
 
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
+import uk.ac.bris.cs.gamekit.graph.Node;
 import uk.ac.bris.cs.scotlandyard.model.*;
 
 import java.util.HashSet;
@@ -14,7 +15,7 @@ public class Score {
     private DGraph dGraph;
     private State state;
     private int source;
-    private Set<Integer> detectiveLocations = new HashSet<>();
+    private Set<Integer> detectiveLocations;
     private final double[] dijkstraTable = new double[200];/* Stores the maximum distances/weightings from two nodes
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
@@ -31,55 +32,52 @@ public class Score {
     private void calculate(){
         Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
         dijkstra.calculateDistances();
-        for (int j = 1; j<200; j++){
-            if(source !=j) {
-                dijkstraTable[j] = dijkstra.getCost(j);
-            }
-            else dijkstraTable[j] = 0;
+        Set<Node<Integer>>neighbours = dGraph.getNode(source).findNeighbours(dGraph,graph.getNode(source));
+        if(neighbours==null)throw new IllegalArgumentException("neighbours are null");
+        for (Node<Integer> neighbour : neighbours){
+            dijkstraTable[neighbour.value()] = dijkstra.getCost(neighbour.value());
         }
     }
 
     public int getBestDestination(int location){
         int bestDestination = -1;
         double max = -1;
-        int count = 0;
-        for (Edge<Integer, Transport> edge:graph.getEdgesFrom(graph.getNode(location))){
-                count++;
-                System.out.println("Value:" + dijkstraTable[edge.destination().value()]);
-                System.out.println("Safety: "+count+" "+dGraph.getNode(location).getSafety());
-
-                if(!detectiveLocations.contains(edge.destination().value()) && dijkstraTable[edge.destination().value()] > max){
-                    max = dijkstraTable[edge.destination().value()];
-                    bestDestination = edge.destination().value();
-                }
+        for (Node<Integer> neighbour: dGraph.getNode(source).findNeighbours(dGraph,graph.getNode(location))){
+            if(!detectiveLocations.contains(neighbour.value()) && dijkstraTable[neighbour.value()] > max){
+                max = dijkstraTable[neighbour.value()];
+                bestDestination = neighbour.value();
             }
-        System.out.println("Max: " + max);
-        System.out.println("Final Safety: " + dGraph.getNode(bestDestination).getSafety());
+        }
         return bestDestination;
     }
 
     public Move getBestMove() {
-        Transport transport = null;
+        Ticket ticket = null;
         int firstDestination = getBestDestination(this.source);
-        for (Edge<Integer, Transport> edge : graph.getEdges()) {
-            if (edge.source().value() == this.source && edge.destination().value() == firstDestination)
-            System.out.println("Transport: "+edge.data().toString());{
-                transport = edge.data();
-            }
-        }
-        if (state.getMrXDoubleTickets() > 0 && dGraph.getNode(firstDestination).getSafety() < 0.45) {
-            int secondDestination = getBestDestination(firstDestination);
-            Transport transport2 = null;
-            for (Edge<Integer, Transport> edge : graph.getEdges()) {
-                if (edge.source().value() == firstDestination && edge.destination().value() == secondDestination) {
-                    transport2 = edge.data();
-                    System.out.println("Second move location:" + secondDestination);
-                    return (new DoubleMove(Colour.BLACK, Ticket.fromTransport(transport), firstDestination, Ticket.fromTransport(transport2), secondDestination));
+        for (Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(source))) {
+            if (edge.destination().value() == firstDestination && (state.getMrXTickets().get(Ticket.fromTransport(edge.data()))>0)) {
+                if(dGraph.getNode(firstDestination).getFreedom() <= 6){
+                    ticket = Ticket.SECRET;
                 }
-
+                else ticket = Ticket.fromTransport(edge.data());
             }
         }
-        System.out.println("First move location " + firstDestination);
-        return (new TicketMove(Colour.BLACK, Ticket.fromTransport(transport), firstDestination));
+        if (dGraph.getNode(firstDestination).getSafety() <= 65) {
+            Ticket ticket2;
+            int secondDestination = getBestDestination(firstDestination);
+            for (Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(firstDestination))) {
+                if ((edge.destination().value() == secondDestination)&& (state.getMrXTickets().get(Ticket.fromTransport(edge.data()))>0)) {
+                    if(dGraph.getNode(firstDestination).getSafety()<dGraph.getNode(secondDestination).getSafety()){
+                        if(dGraph.getNode(firstDestination).getFreedom() <= 6){
+                            ticket2 = Ticket.SECRET;
+                        }
+                        else ticket2 = Ticket.fromTransport(edge.data());
+
+                        return (new DoubleMove(Colour.BLACK, ticket, firstDestination, ticket2, secondDestination));
+                    }
+                }
+            }
+        }
+        return (new TicketMove(Colour.BLACK, ticket, firstDestination));
     }
 }

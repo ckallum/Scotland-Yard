@@ -45,7 +45,7 @@ public class DGraph {
             if (!detectiveLocations.contains(location)) {
                 if (this.visited.contains(location)) {
                     if (danger >= 55) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
-                        subtractSafety(location, danger + 10);
+                        subtractSafety(location, danger + 5);
                     }
                 }
                 else {
@@ -59,7 +59,7 @@ public class DGraph {
                 neighbourNodes.add(edge.destination().value());
             }
             if(danger>=35) {
-                weightNodeSafety(neighbourNodes, (danger-20));
+                weightNodeSafety(neighbourNodes, (danger-10));
             }
         }
     }
@@ -79,7 +79,7 @@ public class DGraph {
             for (Edge<Integer, Transport> edge : edges){
                 if(edge.source().value().equals(node.getLocation())){
                     if (!detectiveLocations.contains(edge.destination().value())) {
-                        count += node.getSafety();
+                        count ++;
                     }
                 }
                 node.setFreedom(count);
