@@ -40,7 +40,11 @@ public class DNode {
     public void subtractSafety(double danger){
         if(safety>danger) {
             this.safety -= (danger);
-        }
+        }/*
+        These conditions occur when the safety is already low i.e we don't need to decrement the
+        safety that much
+        or
+        The danger is really high which means we need to be able to decrement by a relatively high amount*/
         else if(this.safety-(danger/4)>0){
                this.safety-=(danger/4);
         }

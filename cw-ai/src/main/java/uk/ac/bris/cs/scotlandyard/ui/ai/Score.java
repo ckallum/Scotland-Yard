@@ -1,6 +1,5 @@
 package uk.ac.bris.cs.scotlandyard.ui.ai;
 
-//NEED TO DO SOMETHING ON DOUBLE MOVE
 
 import uk.ac.bris.cs.gamekit.graph.Edge;
 import uk.ac.bris.cs.gamekit.graph.Graph;
