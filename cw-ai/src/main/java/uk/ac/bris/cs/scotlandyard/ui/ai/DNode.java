@@ -44,8 +44,8 @@ public class DNode {
         else if(this.safety-(danger/4)>0){
                this.safety-=(danger/4);
         }
-        else if(this.safety-(danger/6)>0){
-            this.safety-=(danger/6);
+        else if(this.safety-(danger/5)>0){
+            this.safety-=(danger/5);
         }
     }
 
