@@ -48,6 +48,7 @@ public class DGraph {
                 }
                 else {
                     subtractSafety(location, danger);
+                    visited.add(location);
                 }
             }
             Collection<Edge<Integer,Transport>> connectingEdges = graph.getEdgesFrom(graph.getNode(location));
@@ -65,7 +66,6 @@ public class DGraph {
         for(DNode node : nodes){
             if(node.getLocation()==location){
                 node.subtractSafety(safety);
-                visited.add(location);
             }
         }
     }
