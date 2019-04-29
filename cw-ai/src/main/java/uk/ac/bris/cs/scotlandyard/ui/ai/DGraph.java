@@ -47,7 +47,7 @@ public class DGraph {
             if (!detectiveLocations.contains(location)) {
                 /*if the location is 2 nodes away from a detective and is 1 node away from another detective,
                 * increase the amount that is taken away*/
-                if (danger >80 && getNode(location).getSafety()<30) {
+                if (danger >80 && getNode(location).getSafety()<40) {
                     subtractSafety(location, danger*1.5);
                 }
                 else if(!v.contains(location)){
