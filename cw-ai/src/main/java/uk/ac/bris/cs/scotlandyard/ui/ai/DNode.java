@@ -38,7 +38,15 @@ public class DNode {
     }
 
     public void subtractSafety(double danger){
-        if(safety>danger) this.safety -= danger;
+        if(safety>danger) {
+            this.safety -= (danger);
+        }
+        else if(this.safety-(danger/4)>0){
+               this.safety-=(danger/4);
+        }
+        else if(this.safety-(danger/6)>0){
+            this.safety-=(danger/6);
+        }
     }
 
     public int getFreedom(){

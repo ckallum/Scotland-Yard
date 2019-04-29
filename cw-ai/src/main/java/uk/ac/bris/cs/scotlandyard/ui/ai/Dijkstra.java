@@ -23,13 +23,18 @@ public class Dijkstra {
             for(int detectiveLocation : detectiveLocations){
                 dijkstra(detectiveLocation, neighbour.value());
             }
+            //Calculates average distance from all detectives to that neighbour node
             distances.put(neighbour.value(), distances.get(neighbour.value())/detectiveLocations.size());
+            //Testing all average distances from detective locations to each neighbour node is filled
+            assert (distances.get(neighbour.value())>=0);
         }
+
     }
 
-
+    //This function calculates the distance from the respective detective and the neighbour node from MrX
     public void dijkstra(int source, int destination){
-        //Creates a Map For Costs between Nodes Relative to the Source
+        //Source = the detective location
+        //Destination = neighbour node from MrX
         Set<Node<Integer>> visited = new HashSet<>();
         Set<Node<Integer>> minPQ = new HashSet<>();
         Map<Integer, Integer> temp = new HashMap<>();
@@ -56,6 +61,7 @@ public class Dijkstra {
                 }
             }
         }
+        //Adds the distance from the respective detective to the total distance from all detectives to that node--average is calculated later
         distances.put(destination, distances.get(destination)+temp.get(destination));
     }
 
@@ -73,7 +79,10 @@ public class Dijkstra {
 
 
     public double getCost(int location){
-        return (distances.get(location)-graph.getNode(location).getFreedom())*(graph.getNode(location).getSafety());
+        if(graph.getNode(location).getFreedom()>0){
+            return (distances.get(location))*(graph.getNode(location).getSafety()-graph.getNode(location).getFreedom());
+        }
+        return (distances.get(location))*(graph.getNode(location).getSafety());
     }
 
 

@@ -10,7 +10,6 @@ public class DGraph {
     private List<DNode> nodes = new ArrayList<>();
     private Collection<Edge<Integer, Transport>> edges;
     private Set<Integer> detectiveLocations;
-    private ArrayList<Integer> visited=new ArrayList<>();
     private ScotlandYardView view;
 
     public DGraph(State state) {
@@ -29,22 +28,31 @@ public class DGraph {
                 node.setSafety(0);
             }
         }
-        weightNodeSafety(findDetectiveLocations(),95);
+        weightNodeSafety(findDetectiveLocations(),90, Collections.emptySet());
         weightNodeFreedom();
+        for(DNode node:nodes){
+            System.out.println(node.getSafety());
+        }
+
+        //Test to assert all detective locations have 0 safety;
+        for(Integer location : detectiveLocations){
+            assert(nodes.get(location).getSafety()==0);
+        }
     }
 
-    private void weightNodeSafety(Set<Integer> ns, int danger){
+    private void weightNodeSafety(Set<Integer> ns, int danger, Set<Integer>visited){
         //Higher the danger the more dangerous the node is
+        Set<Integer>v=new HashSet<>(visited);//Creates a set of visited nodes so it doesn't repeat itself
         for(Integer location:ns) {
             if (!detectiveLocations.contains(location)) {
-                if (this.visited.contains(location)) {
-                    if (danger >65) { //If the node has been visited before and it is 3 moves away from another detective: subtract 0.1 from it's safety
-                        subtractSafety(location, danger + 5);
-                    }
+                /*if the location is 2 nodes away from a detective and is 1 node away from another detective,
+                * increase the amount that is taken away*/
+                if (danger >80 && getNode(location).getSafety()<30) {
+                    subtractSafety(location, danger*1.5);
                 }
-                else {
+                else if(!v.contains(location)){
                     subtractSafety(location, danger);
-                    visited.add(location);
+                    v.add(location);
                 }
             }
             Collection<Edge<Integer,Transport>> connectingEdges = graph.getEdgesFrom(graph.getNode(location));
@@ -52,8 +60,9 @@ public class DGraph {
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            if(danger>=45){
-                weightNodeSafety(neighbourNodes, (danger-10));
+            //Only subtract more safety if the node is 3 nodes away from a detective;
+            if(danger>60){
+                weightNodeSafety(neighbourNodes, (danger-10),v);
             }
         }
     }

@@ -15,7 +15,6 @@ public class Score {
     private DGraph dGraph;
     private State state;
     private int source;
-    private Set<Integer> detectiveLocations;
     private final double[] dijkstraTable = new double[200];/* Stores the maximum distances/weightings from two nodes
                                                                 Use Dijkstra's to calculate maximum score between two nodes
     */
@@ -26,7 +25,6 @@ public class Score {
         this.source = state.getMrxLocation();
         this.state = state;
         this.dGraph = new DGraph(state);
-        this.detectiveLocations = dGraph.findDetectiveLocations();
         calculate();
     }
 
@@ -34,11 +32,10 @@ public class Score {
         Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
         dijkstra.calculateDistances();
         Set<Node<Integer>> neighbours = dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(source));
-        System.out.println("Neighbours size: "+ neighbours.size());
         for (Node<Integer> neighbour : neighbours) {
             dijkstraTable[neighbour.value()] = dijkstra.getCost(neighbour.value());
-            System.out.println(neighbour.value());
-            System.out.println("Score1: "+dijkstraTable[neighbour.value()]);
+            //Quick test to check all neighbour nodes are properly scored
+            assert(dijkstraTable[neighbour.value()]>-1);
         }
     }
 
@@ -68,12 +65,12 @@ public class Score {
                 move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
             }
         }
-        if (dGraph.getNode(source).getSafety() <= 45 && dGraph.getNode(source).getFreedom()>1 ){
+        if (dGraph.getNode(source).getSafety() <= 30){//If the current node is relatively unsafe consider using a doubleMove
             if (state.getMrXTickets().get(Ticket.DOUBLE) > 0) {
                 Ticket ticket2;
                 Move move2 = null;
                 int secondDestination = getBestDestination(firstDestination);
-                if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {
+                if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {//Only create the double Move if the second destination in the move is better than the first
                     for (Edge<Integer, Transport> edge2 : graph.getEdgesFrom(graph.getNode(firstDestination))) {
                         if ((edge2.destination().value() == secondDestination) && (state.getMrXTickets().get(Ticket.fromTransport(edge2.data())) > 0)) {
                             if (toSecret(secondDestination)) {
