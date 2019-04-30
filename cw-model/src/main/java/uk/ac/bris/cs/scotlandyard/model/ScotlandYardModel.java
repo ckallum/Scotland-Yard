@@ -74,19 +74,6 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
 
     }
 
-    @Override
-    public void registerSpectator(Spectator spectator) {
-        if (spectators.contains(spectator)) throw new IllegalArgumentException("Duplicate Spectator");
-        spectators.add(requireNonNull(spectator));
-    }
-
-    @Override
-
-    public void unregisterSpectator(Spectator spectator) {
-        requireNonNull(spectator);
-        if (spectators.isEmpty()) throw new IllegalArgumentException("No Spectators to remove");
-        else spectators.remove(requireNonNull(spectator));
-    }
 
     @Override
     public void startRotate() {
@@ -155,6 +142,20 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
 
     private boolean isRevealRound(int round){
         return (rounds.get(round));
+    }
+
+    @Override
+    public void registerSpectator(Spectator spectator) {
+        if (spectators.contains(spectator)) throw new IllegalArgumentException("Duplicate Spectator");
+        spectators.add(requireNonNull(spectator));
+    }
+
+    @Override
+
+    public void unregisterSpectator(Spectator spectator) {
+        requireNonNull(spectator);
+        if (spectators.isEmpty()) throw new IllegalArgumentException("No Spectators to remove");
+        else spectators.remove(requireNonNull(spectator));
     }
 
     private void notifySpectatorsOnMoveMade(ScotlandYardView v, Move move){
