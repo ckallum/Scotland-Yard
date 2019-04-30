@@ -32,7 +32,7 @@ public class Dijkstra {
     }
 
     //This function calculates the distance from the respective detective and the neighbour node from MrX
-    public void dijkstra(int source, int destination){
+    private void dijkstra(int source, int destination){
         //Source = the detective location
         //Destination = neighbour node from MrX
         Set<Node<Integer>> visited = new HashSet<>();
@@ -79,7 +79,7 @@ public class Dijkstra {
 
 
     public double getCost(int location) {
-        return (distances.get(location)) * (graph.getNode(location).getSafety());
+        return ((distances.get(location)) * (graph.getNode(location).getSafety()) * (graph.getNode(location).getFreedom()*0.1));
     }
 
 }
