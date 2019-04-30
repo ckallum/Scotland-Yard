@@ -40,8 +40,12 @@ public class Score {
         double max = -1;
         for (Node<Integer> neighbour : dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(location))) {
             if (dijkstraTable[neighbour.value()] > max) {
-                max = dijkstraTable[neighbour.value()];
-                bestDestination = neighbour.value();
+                for(Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(location))){
+                    if(edge.destination()==neighbour && state.getMrXTickets().get(Ticket.fromTransport(edge.data()))>0){
+                        max = dijkstraTable[neighbour.value()];
+                        bestDestination = neighbour.value();
+                    }
+                }
             }
         }
         return bestDestination;
@@ -53,7 +57,7 @@ public class Score {
         DNode dSource = dGraph.getNode(source);
         int firstDestination = getBestDestination(this.source);
         for (Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(source))) {
-            if (edge.destination().value() == firstDestination && (state.getMrXTickets().get(Ticket.fromTransport(edge.data())) > 0)) {
+            if (edge.destination().value() == firstDestination) {
                 if (toSecret(source)) {
                     ticket1 = Ticket.SECRET;
                 } else {
@@ -69,7 +73,7 @@ public class Score {
                 int secondDestination = getBestDestination(firstDestination);
                 if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {//Only create the double move if the second move in the move is better than the first move. This should always be the case if the first move is a pass move
                     for (Edge<Integer, Transport> edge2 : graph.getEdgesFrom(graph.getNode(firstDestination))) {
-                        if ((edge2.destination().value() == secondDestination) && (state.getMrXTickets().get(Ticket.fromTransport(edge2.data())) > 0)) {
+                        if ((edge2.destination().value() == secondDestination)) {
                             if (toSecret(firstDestination)) {
                                 ticket2 = Ticket.SECRET;
                             } else {
