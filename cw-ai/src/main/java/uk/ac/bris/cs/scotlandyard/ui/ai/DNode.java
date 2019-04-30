@@ -17,6 +17,7 @@ public class DNode {
     public DNode(Integer location) {
         this.location = location;
         this.safety = 100;
+        this.freedom = 0;
     }
 
     public Set<Node<Integer>> findNeighbours(DGraph graph, Node<Integer> location){
@@ -70,7 +71,7 @@ public class DNode {
     }
 
     public void setFreedom(int freedom){
-        this.freedom = freedom;
+        this.freedom += freedom;
     }
 
 }

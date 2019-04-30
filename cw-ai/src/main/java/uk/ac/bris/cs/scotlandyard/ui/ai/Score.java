@@ -51,8 +51,6 @@ public class Score {
     }
 
     public Move getBestMove() {
-        if(dGraph.getNode(source).getFreedom()==0) return new PassMove(Colour.BLACK); //If the detective is trapped don't move
-
         Ticket ticket1 = null;
         Move move1 = null;
         int firstDestination = getBestDestination(this.source);
@@ -66,11 +64,12 @@ public class Score {
                 move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
             }
         }
-        if (dGraph.getNode(source).getSafety() <= 30){//If the current node is relatively unsafe consider using a doubleMove
+        if (dGraph.getNode(source).getSafety() <= 10 && dGraph.getNode(source).getFreedom() <3){//If the current node is relatively unsafe consider using a doubleMove
             if (state.getMrXTickets().get(Ticket.DOUBLE) > 0) {
                 Ticket ticket2;
                 Move move2 = null;
                 int secondDestination = getBestDestination(firstDestination);
+              //  if(dGraph.getNode(source).getFreedom()==0) return new PassMove(Colour.BLACK); //If the detective is trapped don't move
                 if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {//Only create the double Move if the second destination in the move is better than the first
                     for (Edge<Integer, Transport> edge2 : graph.getEdgesFrom(graph.getNode(firstDestination))) {
                         if ((edge2.destination().value() == secondDestination) && (state.getMrXTickets().get(Ticket.fromTransport(edge2.data())) > 0)) {

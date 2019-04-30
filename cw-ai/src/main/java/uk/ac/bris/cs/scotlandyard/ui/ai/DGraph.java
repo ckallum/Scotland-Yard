@@ -34,6 +34,10 @@ public class DGraph {
         weightNodeSafety(findDetectiveLocations(),90, Collections.emptySet());
         subtractNodeFreedom();
 
+        for(DNode node:nodes){
+            System.out.println("Freedom: "+node.getFreedom());
+        }
+
         //Test to assert all detective locations have 0 safety;
         int count = 0;
         for(DNode node:nodes){
