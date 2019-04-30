@@ -59,12 +59,10 @@ public class Score {
                 } else {
                     ticket1 = Ticket.fromTransport(edge.data());
                 }
-                if(dSource.getFreedom()==0){//If the source is surrounded then the first move would be a passMove
-                    move1 = new PassMove(Colour.BLACK);
-                } else move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
+                move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
             }
         }
-        if (dSource.getSafety() <= 20){//If the current node is relatively unsafe consider using a doubleMove
+        if (dSource.getSafety() <= 20 || dGraph.getNode(firstDestination).getSafety()<=20){//If the current node or the next best mode is relatively unsafe consider using a doubleMove
             if (state.getMrXTickets().get(Ticket.DOUBLE) > 0) {
                 Ticket ticket2;
                 Move move2 = null;
