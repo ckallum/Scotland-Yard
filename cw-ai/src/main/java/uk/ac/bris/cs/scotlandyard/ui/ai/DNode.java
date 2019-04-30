@@ -41,15 +41,23 @@ public class DNode {
         if(safety>danger) {
             this.safety -= (danger);
         }/*
-        These conditions occur when the safety is already low i.e we don't need to decrement the
-        safety that much
-        or
-        The danger is really high which means we need to be able to decrement by a relatively high amount*/
-        else if(this.safety-(danger/4)>0){
-               this.safety-=(danger/4);
-        }
+        These conditions occur when the node is already visited but is being visited by another detective
+        that is one node away
+        */
+        /*One node away from 2 detectives
+          - Score:2
+
+          Three node away from a detective and one node away from another detective
+          - Score : 12
+        */
         else if(this.safety-(danger/5)>0){
             this.safety-=(danger/5);
+        }
+        /*One node away from 2 detectives
+          - Score:1
+        */
+        else if(this.safety-(danger/10)>0){
+            this.safety-=(danger/10);
         }
     }
 

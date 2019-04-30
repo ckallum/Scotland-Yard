@@ -78,13 +78,8 @@ public class Dijkstra {
     }
 
 
-    public double getCost(int location){
-        if(graph.getNode(location).getFreedom()>0){
-            return (distances.get(location))*(graph.getNode(location).getSafety()-graph.getNode(location).getFreedom());
-        }
-        return (distances.get(location))*(graph.getNode(location).getSafety());
+    public double getCost(int location) {
+        return (distances.get(location)) * (graph.getNode(location).getSafety());
     }
-
-
 
 }

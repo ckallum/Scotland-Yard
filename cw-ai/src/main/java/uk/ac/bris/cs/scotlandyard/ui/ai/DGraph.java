@@ -28,16 +28,20 @@ public class DGraph {
                 node.setSafety(0);
             }
         }
+        for(DNode node:nodes){
+            node.setFreedom(node.findNeighbours(this, graph.getNode(node.getLocation())).size());
+        }
         weightNodeSafety(findDetectiveLocations(),90, Collections.emptySet());
         weightNodeFreedom();
-        for(DNode node:nodes){
-            System.out.println(node.getSafety());
-        }
 
         //Test to assert all detective locations have 0 safety;
-        for(Integer location : detectiveLocations){
-            assert(nodes.get(location).getSafety()==0);
+        int count = 0;
+        for(DNode node:nodes){
+            if(node.getSafety()==0){
+                count++;
+            }
         }
+        assert(count==findDetectiveLocations().size());
     }
 
     private void weightNodeSafety(Set<Integer> ns, int danger, Set<Integer>visited){
@@ -47,8 +51,8 @@ public class DGraph {
             if (!detectiveLocations.contains(location)) {
                 /*if the location is 2 nodes away from a detective and is 1 node away from another detective,
                 * increase the amount that is taken away*/
-                if (danger >80 && getNode(location).getSafety()<40) {
-                    subtractSafety(location, danger*1.5);
+                if (danger > 80 && getNode(location).getSafety()<40) {
+                    subtractSafety(location, danger);
                 }
                 else if(!v.contains(location)){
                     subtractSafety(location, danger);
@@ -85,7 +89,7 @@ public class DGraph {
                     }
                 }
             }
-            node.setFreedom(count);
+            node.setFreedom(-count); //Decrease freedom based on number of detectives that are beside the node
         }
     }
 

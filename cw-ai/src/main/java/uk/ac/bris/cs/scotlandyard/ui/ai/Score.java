@@ -56,7 +56,7 @@ public class Score {
         int firstDestination = getBestDestination(this.source);
         for (Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(source))) {
             if (edge.destination().value() == firstDestination && (state.getMrXTickets().get(Ticket.fromTransport(edge.data())) > 0)) {
-                if (toSecret(firstDestination)) {
+                if (toSecret(source)) {
                     ticket1 = Ticket.SECRET;
                 } else {
                     ticket1 = Ticket.fromTransport(edge.data());
@@ -72,7 +72,7 @@ public class Score {
                 if (dijkstraTable[firstDestination] < dijkstraTable[secondDestination]) {//Only create the double Move if the second destination in the move is better than the first
                     for (Edge<Integer, Transport> edge2 : graph.getEdgesFrom(graph.getNode(firstDestination))) {
                         if ((edge2.destination().value() == secondDestination) && (state.getMrXTickets().get(Ticket.fromTransport(edge2.data())) > 0)) {
-                            if (toSecret(secondDestination)) {
+                            if (toSecret(firstDestination)) {
                                 ticket2 = Ticket.SECRET;
                             } else {
                                 ticket2 = Ticket.fromTransport(edge2.data());
@@ -92,8 +92,8 @@ public class Score {
         return null;
     }
 
-    private boolean toSecret(int destination) {
-        return(dGraph.getNode(destination).getFreedom() >1 && state.getMrXTickets().get(Ticket.SECRET) > 0);
+    private boolean toSecret(int location) {
+        return(dGraph.getNode(location).getSafety()<10 && state.getMrXTickets().get(Ticket.SECRET) > 0);
     }
 
 }
