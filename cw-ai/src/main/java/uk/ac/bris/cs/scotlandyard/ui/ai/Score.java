@@ -26,7 +26,6 @@ public class Score {
 
     private void calculate() {
         Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
-        dijkstra.calculateDistances();
         Set<Node<Integer>> neighbours = dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(source));
         for (Node<Integer> neighbour : neighbours) {
             dijkstraTable[neighbour.value()] = dijkstra.getCost(neighbour.value());
@@ -66,7 +65,7 @@ public class Score {
                 move1 = new TicketMove(Colour.BLACK, ticket1, firstDestination);
             }
         }
-        if (dSource.getSafety() <= 20 || dGraph.getNode(firstDestination).getSafety()<=20){//If the current node or the next best mode is relatively unsafe consider using a doubleMove
+        if (dSource.getSafety() <= 30 || dGraph.getNode(firstDestination).getSafety()<=30){//If the current node or the next best mode is relatively unsafe consider using a doubleMove
             if (state.getMrXTickets().get(Ticket.DOUBLE) > 0) {
                 Ticket ticket2;
                 Move move2 = null;

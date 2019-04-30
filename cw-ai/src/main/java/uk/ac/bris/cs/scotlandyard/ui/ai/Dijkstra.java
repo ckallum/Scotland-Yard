@@ -12,10 +12,11 @@ public class Dijkstra {
     public Dijkstra(DGraph dGraph, int source) {
         this.graph = dGraph;
         this.source = source;
+        calculateDistances();
 
     }
 
-    public void calculateDistances(){
+    private void calculateDistances(){
         Set<Integer> detectiveLocations = graph.findDetectiveLocations();
         Set<Node<Integer>> neighbours = graph.getNode(source).findNeighbours(graph, graph.getGraph().getNode(source));
         for(Node<Integer> neighbour:neighbours){
