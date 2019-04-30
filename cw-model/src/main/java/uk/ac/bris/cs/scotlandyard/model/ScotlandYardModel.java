@@ -85,13 +85,6 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
         }
     }
 
-    private boolean NoDetectiveAtLocation(int destination) {
-        for (ScotlandYardPlayer player : players){
-            if(player.isDetective() && (player.location() == destination)) return false;
-        }
-        return true;
-    }
-
     private Set<Move> validMoves(ScotlandYardPlayer player) {
         Set<Move> moves = new HashSet<>();
         if(player.isDetective())moves.addAll(findMoves(player,player.location()));
@@ -130,52 +123,7 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
         return tempMoves;
     }
 
-    private void incrementPlayer(){
-        if (currentPlayer == players.size()-1){currentPlayer = 0;}
-        else currentPlayer++;
-    }
 
-    private void nextMove(){
-        ScotlandYardPlayer player = players.get(currentPlayer);
-        player.player().makeMove(this, player.location(), validMoves(player), this);
-    }
-
-    private boolean isRevealRound(int round){
-        return (rounds.get(round));
-    }
-
-    @Override
-    public void registerSpectator(Spectator spectator) {
-        if (spectators.contains(spectator)) throw new IllegalArgumentException("Duplicate Spectator");
-        spectators.add(requireNonNull(spectator));
-    }
-
-    @Override
-
-    public void unregisterSpectator(Spectator spectator) {
-        requireNonNull(spectator);
-        if (spectators.isEmpty()) throw new IllegalArgumentException("No Spectators to remove");
-        else spectators.remove(requireNonNull(spectator));
-    }
-
-    private void notifySpectatorsOnMoveMade(ScotlandYardView v, Move move){
-        for (Spectator s : spectators){
-            s.onMoveMade(v, move);
-        }
-    }
-
-    private void notifySpectatorsOnRotationComplete(){
-        for(Spectator s : spectators){
-            s.onRotationComplete(this);
-        }
-    }
-
-    private void notifySpectatorsOnRoundStarted() {
-        currentRound++;
-        for (Spectator s : spectators){
-            s.onRoundStarted(this, currentRound);
-        }
-    }
 
     public void accept(Move move) {
         requireNonNull(move);
@@ -251,6 +199,61 @@ public class ScotlandYardModel implements ScotlandYardGame, Consumer<Move>, Move
         else mrXLastLocation= Move.destination();
         notifySpectatorsOnRoundStarted();
         notifySpectatorsOnMoveMade(this, m);
+    }
+
+    private void incrementPlayer(){
+        if (currentPlayer == players.size()-1){currentPlayer = 0;}
+        else currentPlayer++;
+    }
+
+    private void nextMove(){
+        ScotlandYardPlayer player = players.get(currentPlayer);
+        player.player().makeMove(this, player.location(), validMoves(player), this);
+    }
+
+    private boolean NoDetectiveAtLocation(int destination) {
+        for (ScotlandYardPlayer player : players){
+            if(player.isDetective() && (player.location() == destination)) return false;
+        }
+        return true;
+    }
+
+    private boolean isRevealRound(int round){
+        return (rounds.get(round));
+    }
+
+
+    private void notifySpectatorsOnMoveMade(ScotlandYardView v, Move move){
+        for (Spectator s : spectators){
+            s.onMoveMade(v, move);
+        }
+    }
+
+    private void notifySpectatorsOnRotationComplete(){
+        for(Spectator s : spectators){
+            s.onRotationComplete(this);
+        }
+    }
+
+    private void notifySpectatorsOnRoundStarted() {
+        currentRound++;
+        for (Spectator s : spectators){
+            s.onRoundStarted(this, currentRound);
+        }
+    }
+
+    @Override
+    public void registerSpectator(Spectator spectator) {
+        if (spectators.contains(spectator)) throw new IllegalArgumentException("Duplicate Spectator");
+        spectators.add(requireNonNull(spectator));
+    }
+
+    @Override
+
+    public void unregisterSpectator(Spectator spectator) {
+        requireNonNull(spectator);
+        if (spectators.isEmpty()) throw new IllegalArgumentException("No Spectators to remove");
+        else spectators.remove(requireNonNull(spectator));
     }
 
     @Override

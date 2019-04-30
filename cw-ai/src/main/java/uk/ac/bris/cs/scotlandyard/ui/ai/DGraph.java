@@ -32,7 +32,7 @@ public class DGraph {
             node.setFreedom(node.findNeighbours(this, graph.getNode(node.getLocation())).size());
         }
         weightNodeSafety(findDetectiveLocations(),90, Collections.emptySet());
-        weightNodeFreedom();
+        subtractNodeFreedom();
 
         //Test to assert all detective locations have 0 safety;
         int count = 0;
@@ -79,7 +79,7 @@ public class DGraph {
         }
     }
 
-    private void weightNodeFreedom(){
+    private void subtractNodeFreedom(){
         for (DNode node : nodes){
             int count = 0;
             for (Edge<Integer, Transport> edge : edges){

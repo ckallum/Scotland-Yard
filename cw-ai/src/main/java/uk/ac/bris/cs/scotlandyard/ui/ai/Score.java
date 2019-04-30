@@ -51,6 +51,8 @@ public class Score {
     }
 
     public Move getBestMove() {
+        if(dGraph.getNode(source).getFreedom()==0) return new PassMove(Colour.BLACK); //If the detective is trapped don't move
+
         Ticket ticket1 = null;
         Move move1 = null;
         int firstDestination = getBestDestination(this.source);
