@@ -6,7 +6,6 @@ import uk.ac.bris.cs.gamekit.graph.Graph;
 import uk.ac.bris.cs.gamekit.graph.Node;
 import uk.ac.bris.cs.scotlandyard.model.*;
 
-import java.util.HashSet;
 import java.util.Set;
 
 public class Score {

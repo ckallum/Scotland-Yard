@@ -5,7 +5,6 @@ import uk.ac.bris.cs.scotlandyard.model.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.BlockingDeque;
 
 
 /*Class to implement the current State of the game and changes to the player and game view

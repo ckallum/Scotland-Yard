@@ -5,8 +5,6 @@ import java.util.function.Consumer;
 
 import uk.ac.bris.cs.scotlandyard.ai.ManagedAI;
 import uk.ac.bris.cs.scotlandyard.ai.PlayerFactory;
-import uk.ac.bris.cs.scotlandyard.ai.ResourceProvider;
-import uk.ac.bris.cs.scotlandyard.ai.Visualiser;
 import uk.ac.bris.cs.scotlandyard.model.*;
 
 // TODO name the AI
