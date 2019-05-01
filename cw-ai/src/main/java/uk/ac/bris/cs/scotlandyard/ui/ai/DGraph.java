@@ -10,12 +10,10 @@ public class DGraph {
     private List<DNode> nodes = new ArrayList<>();
     private Collection<Edge<Integer, Transport>> edges;
     private Set<Integer> detectiveLocations;
-    private ScotlandYardView view;
 
     public DGraph(State state) {
         this.graph = state.getGraph();
-        this.view = state.getView();
-        this.detectiveLocations = findDetectiveLocations();
+        this.detectiveLocations = state.getDetectiveLocations();
         this.edges = graph.getEdges();
 
 
@@ -31,7 +29,7 @@ public class DGraph {
         for(DNode node:nodes){
             node.setFreedom(node.findNeighbours(this, graph.getNode(node.getLocation())).size());
         }
-        weightNodeSafety(findDetectiveLocations(),90, Collections.emptySet());
+        weightNodeSafety(detectiveLocations,90, Collections.emptySet());
         subtractNodeFreedom();
 
         //Test to assert all detective locations have 0 safety;
@@ -41,7 +39,7 @@ public class DGraph {
                 count++;
             }
         }
-        assert(count==findDetectiveLocations().size());
+        assert(count==detectiveLocations.size());
     }
 
     private void weightNodeSafety(Set<Integer> ns, int danger, Set<Integer>visited){
@@ -64,7 +62,7 @@ public class DGraph {
             for (Edge<Integer,Transport> edge : connectingEdges){
                 neighbourNodes.add(edge.destination().value());
             }
-            //Only subtract more safety if the node is 3 nodes away from a detective;
+            //Only subtract more safety if the node is 3 nodes away from a detective - recursive call.
             if(danger>60){
                 weightNodeSafety(neighbourNodes, (danger-10),v);
             }
@@ -79,6 +77,7 @@ public class DGraph {
         }
     }
 
+    //Subtracts freedom based on how many detectives are close by.
     private void subtractNodeFreedom(){
         for (DNode node : nodes){
             int count = 0;
@@ -93,15 +92,7 @@ public class DGraph {
         }
     }
 
-    public Set<Integer> findDetectiveLocations() {
-        Set<Integer> detectiveLocations = new HashSet<>();
-        for(Colour colour: view.getPlayers()){
-            if(colour!=Colour.BLACK){
-                detectiveLocations.add(view.getPlayerLocation(colour).orElse(0));
-            }
-        }
-        return (detectiveLocations);
-    }
+    //Returns detective locations
 
     public Graph<Integer, Transport> getGraph() {
         return graph;
@@ -116,4 +107,7 @@ public class DGraph {
         return null;
     }
 
+    public Set<Integer> getDetectiveLocations() {
+        return detectiveLocations;
+    }
 }

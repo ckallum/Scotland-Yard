@@ -35,8 +35,7 @@ public class MyAI implements PlayerFactory {
 			Move bestMove = score.getBestMove();
 			if (bestMove == null){
 				//Testing if move is null
-				System.out.println("Move is null");
-				bestMove = new ArrayList<>(moves).get(random.nextInt(moves.size()));
+				throw new IllegalArgumentException("Move is Null");
 			}
 			callback.accept(bestMove);
 		}

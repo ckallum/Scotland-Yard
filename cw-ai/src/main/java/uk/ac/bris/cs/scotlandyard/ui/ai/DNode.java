@@ -20,6 +20,7 @@ public class DNode {
         this.freedom = 0;
     }
 
+    //Returns the set of neighbouring nodes.
     public Set<Node<Integer>> findNeighbours(DGraph graph, Node<Integer> location){
         Set<Node<Integer>> neighbours = new HashSet<>();
         Collection<Edge<Integer, Transport>> connections = graph.getGraph().getEdgesFrom(location);

@@ -33,12 +33,14 @@ public class Score {
         }
     }
 
+    //Returns the best destination to go to from a detective location.
     private int getBestDestination(int location) {
         int bestDestination = -1;
         double max = -1;
         for (Node<Integer> neighbour : dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(location))) {
             if (dijkstraTable[neighbour.value()] > max) {
                 for(Edge<Integer, Transport> edge : graph.getEdgesFrom(graph.getNode(location))){
+                    //Only consider destination if MrX has enough tickets to get there
                     if(edge.destination()==neighbour && state.getMrXTickets().get(Ticket.fromTransport(edge.data()))>0){
                         max = dijkstraTable[neighbour.value()];
                         bestDestination = neighbour.value();
@@ -49,6 +51,7 @@ public class Score {
         return bestDestination;
     }
 
+    //Returns the best move
     public Move getBestMove() {
         Ticket ticket1 = null;
         Move move1 = null;
@@ -92,6 +95,7 @@ public class Score {
         return null;
     }
 
+    //Check's if the current location should be considered to use a secret move.
     private boolean toSecret(int location) {
         return(dGraph.getNode(location).getSafety()<10 && state.getMrXTickets().get(Ticket.SECRET) > 0);
     }

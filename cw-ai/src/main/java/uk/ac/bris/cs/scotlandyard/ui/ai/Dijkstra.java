@@ -17,7 +17,7 @@ public class Dijkstra {
     }
 
     private void calculateDistances(){
-        Set<Integer> detectiveLocations = graph.findDetectiveLocations();
+        Set<Integer> detectiveLocations = graph.getDetectiveLocations();
         Set<Node<Integer>> neighbours = graph.getNode(source).findNeighbours(graph, graph.getGraph().getNode(source));
         for(Node<Integer> neighbour:neighbours){
             distances.put(neighbour.value(),0);
@@ -66,6 +66,7 @@ public class Dijkstra {
         distances.put(destination, distances.get(destination)+temp.get(destination));
     }
 
+    //Finds minimum distance in the temporary distance table from the destination(neighbour node) and source(detective location)
     private int findMin(Map<Integer, Integer> temp, Set <Node<Integer>> minPQ) {
         int current = Integer.MAX_VALUE;
         int node = -1;
@@ -78,7 +79,7 @@ public class Dijkstra {
         return node;
     }
 
-
+    //The total cost of a location. We value the node freedom less so multiplied by 0.1.
     public double getCost(int location) {
         return ((distances.get(location)) * (graph.getNode(location).getSafety()) * (graph.getNode(location).getFreedom()*0.1));
     }
