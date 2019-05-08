@@ -23,6 +23,7 @@ public class Score {
         calculate();
     }
 
+    //Strategy Pattern
     private void calculate() {
         Set<Node<Integer>> neighbours = dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(source));
         for (Node<Integer> neighbour : neighbours) {
