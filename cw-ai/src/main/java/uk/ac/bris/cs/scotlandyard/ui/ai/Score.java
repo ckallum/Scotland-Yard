@@ -24,9 +24,9 @@ public class Score {
     }
 
     private void calculate() {
-        Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), this.source);
         Set<Node<Integer>> neighbours = dGraph.getNode(source).findNeighbours(dGraph, graph.getNode(source));
         for (Node<Integer> neighbour : neighbours) {
+            Dijkstra dijkstra = new Dijkstra(new DGraph(this.state), neighbour.value());
             dijkstraTable[neighbour.value()] = dijkstra.getCost(neighbour.value());
             //Quick test to check all neighbour nodes are properly scored
             assert(dijkstraTable[neighbour.value()]>-1);

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Dijkstra {
     private DGraph graph;
-    private Map<Integer,Integer> distances = new HashMap<>();
+    private int distance;
     private int source;
 
 
@@ -18,19 +18,15 @@ public class Dijkstra {
 
     private void calculateDistances(){
         Set<Integer> detectiveLocations = graph.getDetectiveLocations();
-        Set<Node<Integer>> neighbours = graph.getNode(source).findNeighbours(graph, graph.getGraph().getNode(source));
-        for(Node<Integer> neighbour:neighbours){
-            distances.put(neighbour.value(),0);
-            for(int detectiveLocation : detectiveLocations){
-                dijkstra(detectiveLocation, neighbour.value());
-            }
-            //Calculates average distance from all detectives to that neighbour node
-            distances.put(neighbour.value(), distances.get(neighbour.value())/detectiveLocations.size());
-            //Testing all average distances from detective locations to each neighbour node is filled
-            assert (distances.get(neighbour.value())>=0);
+        for(int detectiveLocation : detectiveLocations){
+            dijkstra(detectiveLocation, source);
         }
-
+        //Calculates average distance from all detectives to that neighbour node
+        this.distance = distance/detectiveLocations.size();
+        //Testing all average distances from detective locations to each neighbour node is filled
+        assert (distance>=0);
     }
+
 
     //This function calculates the distance from the respective detective and the neighbour node from MrX
     private void dijkstra(int source, int destination){
@@ -63,7 +59,7 @@ public class Dijkstra {
             }
         }
         //Adds the distance from the respective detective to the total distance from all detectives to that node--average is calculated later
-        distances.put(destination, distances.get(destination)+temp.get(destination));
+        distance+=temp.get(destination);
     }
 
     //Finds minimum distance in the temporary distance table from the destination(neighbour node) and source(detective location)
@@ -81,7 +77,7 @@ public class Dijkstra {
 
     //The total cost of a location. We value the node freedom less so multiplied by 0.1.
     public double getCost(int location) {
-        return ((distances.get(location)) * (graph.getNode(location).getSafety()) * (graph.getNode(location).getFreedom()*0.1));
+        return ((this.distance) * (graph.getNode(location).getSafety()) * (graph.getNode(location).getFreedom()*0.1));
     }
 
 }
