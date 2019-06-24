@@ -4,8 +4,8 @@
 Callum Ke
 
 This is the full coursework for my first year Object Orientated Programming course in Java. It simulates the Scotland Yard board game.
--A GUI skeleton was given. To pass the coursework(50%) you needed to implement methods to pass all the tests.
--To obtain the rest of the marks you had to implement an AI to play as the MrX Player to find the next best move. 
+- A GUI skeleton was given. To pass the coursework(50%) you needed to implement methods to pass all the tests.
+- To obtain the rest of the marks you had to implement an AI to play as the MrX Player to find the next best move. 
 	- The AI I implemented uses Dijkstra's algorithm and a weighting factor to choose the best move.
 
 How to Run
