@@ -1,4 +1,4 @@
-# ScotlandYard Board Game
+# Scotland Yard Board Game
 ==============
 
 Callum Ke
